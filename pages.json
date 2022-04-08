@@ -1,0 +1,73 @@
+{
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue",
+		"^m-(.*)": "@/components/m-$1/m-$1.vue"
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/order/order",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/rank/rank",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		}
+    ],
+	"subPackages":[
+		{
+			"root":"other_pages",
+			"pages":[
+				{
+				    "path" : "seat/seat",
+				    "style" :                                                                                    
+				    {
+				        "navigationBarTitleText": "",
+				        "enablePullDownRefresh": false
+				    }
+				    
+				}
+			]
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationStyle": "custom" // 隐藏系统导航栏
+
+	},
+	"tabBar": {
+		// 采用自定义tabbar，uni-app提供路由
+		"list": [{
+				"pagePath": "pages/index/index"
+
+			},
+			{
+				"pagePath": "pages/mine/mine"
+
+			},
+			{
+				"pagePath": "pages/order/order"
+
+			}
+		]
+	}
+}

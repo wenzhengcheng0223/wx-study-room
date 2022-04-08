@@ -1,0 +1,25 @@
+{
+    "setting": {},
+    "condition": {
+        "plugin": {
+            "list": []
+        },
+        "game": {
+            "list": []
+        },
+        "gamePlugin": {
+            "list": []
+        },
+        "miniprogram": {
+            "list": [
+                {
+                    "name": "develop",
+                    "pathName": "other_pages/seat/seat",
+                    "query": "orderTimestamp=1649340017190&storeName=MiNa%EF%BC%88%E9%87%8D%E5%BA%86%EF%BC%89%E5%A4%A7%E5%AD%A6%E5%9F%8E%E7%86%99%E8%A1%97%E5%B0%9A%E9%83%BD%E4%BC%9A&time=08%3A00-23%3A00&orderDay=04%E6%9C%8807%E6%97%A5",
+                    "scene": null,
+                    "launchMode": "default"
+                }
+            ]
+        }
+    }
+}
