@@ -177,7 +177,9 @@
 				var expiration = new Date(this.orderTimestamp)
 				expiration.setHours(expiration.getHours()+parseInt(this.orderTotal))
 				this.orderTotal % 1 == 0.5 ? expiration.setMinutes(expiration.getMinutes()+30) : expiration.setMinutes(expiration.getMinutes())
-				console.log(expiration.getTime())
+				uni.$u.route('/other_pages/check-seat/check-seat',{
+					timestamp: expiration.getTime()
+				})
 			},
 			// 获取关店时间与预定时间的小时差
 			setHours(){
@@ -191,7 +193,7 @@
 				this.total = this.hours + minutes
 				console.log(this.total)
 				for (var i = 0; i < this.hours; i++) {
-					if(i>5) break
+					if( i > 5 ) break
 					this.radios.push({
 						checked: false
 					})
