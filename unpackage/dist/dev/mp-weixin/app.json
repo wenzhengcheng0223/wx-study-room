@@ -1,36 +1,36 @@
 {
-    "pages": [
-        "pages/index/index",
-        "pages/order/order",
-        "pages/rank/rank",
-        "pages/mine/mine"
-    ],
-    "subPackages": [
-        {
-            "root": "other_pages",
-            "pages": [
-                "seat/seat"
-            ]
-        }
-    ],
-    "window": {
-        "navigationBarTextStyle": "black",
-        "navigationStyle": "custom"
-    },
-    "tabBar": {
-        "list": [
-            {
-                "pagePath": "pages/index/index"
-            },
-            {
-                "pagePath": "pages/mine/mine"
-            },
-            {
-                "pagePath": "pages/order/order"
-            }
-        ]
-    },
-    "permission": {},
-    "usingComponents": {},
-    "sitemapLocation": "sitemap.json"
+  "pages": [
+    "pages/index/index",
+    "pages/order/order",
+    "pages/rank/rank",
+    "pages/mine/mine"
+  ],
+  "subPackages": [
+    {
+      "root": "other_pages",
+      "pages": [
+        "seat/seat",
+        "check-seat/check-seat"
+      ]
+    }
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index"
+      },
+      {
+        "pagePath": "pages/mine/mine"
+      },
+      {
+        "pagePath": "pages/order/order"
+      }
+    ]
+  },
+  "permission": {},
+  "usingComponents": {}
 }
