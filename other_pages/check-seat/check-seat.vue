@@ -8,8 +8,11 @@
 <script>
 	export default {
 		props:{
-			timestamp:{
-				type:Number
+			startTimestamp:{
+				type : Number
+			},
+			endTimestamp:{
+				type : Number
 			}
 		},
 		data() {
