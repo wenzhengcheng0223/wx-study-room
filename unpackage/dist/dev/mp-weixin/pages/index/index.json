@@ -1,0 +1,17 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "my-navbar": "/components/my-navbar/my-navbar",
+    "u-swiper": "/node-modules/uview-ui/components/u-swiper/u-swiper",
+    "my-index-card": "/components/my-index-card/my-index-card",
+    "my-index-e-r": "/components/my-index-ER/my-index-ER",
+    "u--text": "/node-modules/uview-ui/components/u--text/u--text",
+    "u-row": "/node-modules/uview-ui/components/u-row/u-row",
+    "u-col": "/node-modules/uview-ui/components/u-col/u-col",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u--image": "/node-modules/uview-ui/components/u--image/u--image",
+    "my-tabbar": "/components/my-tabbar/my-tabbar",
+    "my-action-sheet": "/components/my-action-sheet/my-action-sheet"
+  }
+}

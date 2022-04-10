@@ -46,7 +46,16 @@
 				    }
 				    
 				}
-			]
+			    ,{
+                    "path" : "check-seat/check-seat",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
 		}
 	],
 	"globalStyle": {

@@ -1,0 +1,13 @@
+{
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "my-navbar": "/components/my-navbar/my-navbar",
+    "u--text": "/node-modules/uview-ui/components/u--text/u--text",
+    "u-divider": "/node-modules/uview-ui/components/u-divider/u-divider",
+    "u-icon": "/node-modules/uview-ui/components/u-icon/u-icon",
+    "u-switch": "/node-modules/uview-ui/components/u-switch/u-switch",
+    "u-tag": "/node-modules/uview-ui/components/u-tag/u-tag",
+    "u-button": "/node-modules/uview-ui/components/u-button/u-button"
+  }
+}
