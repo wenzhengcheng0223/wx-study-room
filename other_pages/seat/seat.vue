@@ -178,7 +178,8 @@
 				expiration.setHours(expiration.getHours()+parseInt(this.orderTotal))
 				this.orderTotal % 1 == 0.5 ? expiration.setMinutes(expiration.getMinutes()+30) : expiration.setMinutes(expiration.getMinutes())
 				uni.$u.route('/other_pages/check-seat/check-seat',{
-					timestamp: expiration.getTime()
+					startTimestamp: this.orderTimestamp,
+					endTimestamp: expiration.getTime()
 				})
 			},
 			// 获取关店时间与预定时间的小时差
