@@ -164,9 +164,8 @@
 			getTimeList(timestamp) {
 				console.log(timestamp)
 				console.log(this.dayList)
-				var time = new Date(); //设置的时间
+				var time = new Date(Date.now()); //设置的时间
 				var day = new Date(timestamp); //切换tabs的日期
-				var now = new Date(); //当前时间
 				this.timeList = []
 
 				if (day.getDate() != time.getDate()) {
@@ -229,8 +228,7 @@
 			},
 			setDayList() {
 				var weekArr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
-				var day = new Date()
-				var now = new Date()
+				var day = new Date(Date.now())
 				this.dayList = []
 				if (day.getHours() <= 22) {
 					this.dayList.push({

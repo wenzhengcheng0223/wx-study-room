@@ -55,11 +55,10 @@
 								</u-tag>
 							</view>
 							<view style="margin-left: 30rpx;">
-								<u-tag text="到关店" :plain="!item.checked" type="info" :name="index"
-									shape="circle" size="medium" @click="radioClick">
+								<u-tag text="到关店" :plain="!endChecked" type="info" name="end"
+									shape="circle" size="medium" @click="endClick">
 								</u-tag>
 							</view>
-							
 						</view>
 					</view>
 				</view>
@@ -97,46 +96,58 @@
 			return {
 				label: '',
 				switchValue: false,
-				radios: [{
-						checked: true
-					},
-					{
-						checked: false
-					},
-					{
-						checked: false
-					},
-					{
-						checked: false
-					},
-					{
-						checked: false
-					},
-					{
-						checked: false
-					}
-				]
+				radios: [],
+				hours: 10, //小时差
+				total: 0, //小时差 单位为 30分钟
+				orderTotal:0,
+				endChecked:false
 			}
 		},
 		methods: {
 			setLabel() {
 				var weekArr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
 				var date = new Date(this.orderTimestamp)
-				this.label = uni.$u.date(this.orderTimestamp, "mm月dd日") + " ( " + weekArr[date.getDay()] + ") " + uni.$u
-					.date(this.orderTimestamp, 'hh:MM')
+				this.label = uni.$u.date(this.orderTimestamp, "mm月dd日") + " ( " + weekArr[date.getDay()] + ") " + uni.$u.date(this.orderTimestamp, 'hh:MM')
 
 			},
 			radioClick(name) {
+				this.endChecked = false
 				this.radios.map((item, index) => {
 					item.checked = index === name ? true : false
 				})
 			},
+			endClick(){
+				this.endChecked = true
+				this.radios.map((item, index) => {
+					item.checked = false
+				})
+			},
 			toCheck(){
+				
+			},
+			// 获取关店时间与预定时间的小时差
+			setHours(){
+				var date = new Date(this.orderTimestamp)
+				var now = new Date(new Date(this.orderTimestamp).setHours(23))
+				now.setMinutes(0)
+				const hours = new Date(now.getTime() - date.getTime())
+				this.hours = hours.getUTCHours()
+				const minutes = hours.getMinutes() === 30 ? 0.5 : 0
+				this.total = this.hours + minutes
+				console.log(this.total)
+				for (var i = 0; i < this.hours; i++) {
+					if(i>5) break
+					this.radios.push({
+						checked: false
+					})
+				}
+				
 				
 			}
 		},
 		onLoad() {
 			this.setLabel()
+			this.setHours()
 		}
 	}
 </script>
