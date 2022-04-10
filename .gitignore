@@ -11,5 +11,4 @@ $RECYCLE.BIN/
 .Trashes
 
 # Node.js
-node_modules/
 **/unpackage/
