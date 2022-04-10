@@ -45,7 +45,7 @@
 				</view>
 				<view style="margin-top: 10rpx;">
 					<view style="margin-left: 40rpx;">
-						<u--text :bold="false" size="26" color="#c2c2c2" text="选择时长(15一小时)" />
+						<u--text :bold="false" size="26" color="#c2c2c2" text="选择时长" />
 					</view>
 					<view style="margin-top: 30rpx; width: 100%; padding: 20rpx;">
 						<view class="tag-item">
@@ -62,6 +62,25 @@
 						</view>
 					</view>
 				</view>
+				<view style="display: flex; flex-direction: row;margin: 20rpx 40rpx;">
+					<view>
+						<p>{{orderTotal ==0 ? '请选择': '已选择'}}</p>
+					</view>
+					<view style="margin-left: 20rpx;">
+						<u--text :bold="true" size="30" color="#35a5ed" 
+						:text="`${orderHours==0? '': orderHours+'小时'} ${orderTotal%1==0.5? '30分钟': ''}`" />
+						
+					</view>
+					<view style="margin-left: 20rpx;">
+						<u-tag text="+1小时"  size="mini" @click="addHours">
+						</u-tag>
+					</view>
+					<view style="margin-left: 20rpx;">
+						<u-tag text="+30分钟"  size="mini" @click="addMinutes">
+						</u-tag>
+					</view>
+				</view>
+				<view style="height: 20rpx;"></view>
 			</view>
 			<view style="margin: 40rpx;">
 				<u-button color="#35a5ed" size="large" @click="toCheck">
@@ -100,7 +119,8 @@
 				hours: 10, //小时差
 				total: 0, //小时差 单位为 30分钟
 				orderTotal:0,
-				endChecked:false
+				endChecked:false,
+				orderHours:0,
 			}
 		},
 		methods: {
@@ -111,19 +131,53 @@
 
 			},
 			radioClick(name) {
+				this.orderTotal = name+1
+				this.orderHours = parseInt(this.orderTotal)
+				console.log(this.orderTotal)
 				this.endChecked = false
 				this.radios.map((item, index) => {
 					item.checked = index === name ? true : false
 				})
 			},
 			endClick(){
+				this.orderTotal = this.total
+				this.orderHours = parseInt(this.orderTotal)
 				this.endChecked = true
 				this.radios.map((item, index) => {
 					item.checked = false
 				})
 			},
+			addHours(){
+				this.orderTotal+=1
+				if(this.orderTotal > this.total)
+				{
+					this.orderTotal -=1
+					uni.showToast({
+						title: '超过最大可预约时间',
+						duration: 2000,
+						icon: 'none'
+					});
+				}
+				this.orderHours = parseInt(this.orderTotal)
+			},
+			addMinutes(){
+				this.orderTotal+= 0.5
+				if(this.orderTotal > this.total)
+				{
+					this.orderTotal -= 0.5
+					uni.showToast({
+						title: '超过最大可预约时间',
+						duration: 2000,
+						icon: 'none'
+					});
+				}
+				this.orderHours = parseInt(this.orderTotal)
+			},
 			toCheck(){
-				
+				var expiration = new Date(this.orderTimestamp)
+				expiration.setHours(expiration.getHours()+parseInt(this.orderTotal))
+				this.orderTotal % 1 == 0.5 ? expiration.setMinutes(expiration.getMinutes()+30) : expiration.setMinutes(expiration.getMinutes())
+				console.log(expiration.getTime())
 			},
 			// 获取关店时间与预定时间的小时差
 			setHours(){
@@ -132,6 +186,7 @@
 				now.setMinutes(0)
 				const hours = new Date(now.getTime() - date.getTime())
 				this.hours = hours.getUTCHours()
+				console.log(hours.getTime())
 				const minutes = hours.getMinutes() === 30 ? 0.5 : 0
 				this.total = this.hours + minutes
 				console.log(this.total)
