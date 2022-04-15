@@ -1,7 +1,10 @@
 <template>
 	<view>
-		cheak seat
-		{{timestamp}}
+		<my-navbar leftText="预定位置" leftIcon="arrow-left" :custom="false" bgColor="#ffffff" :autoBack="true" leftIconSize="40">
+		</my-navbar>
+		<view>
+			
+		</view>
 	</view>
 </template>
 
@@ -22,6 +25,8 @@
 		},
 		methods: {
 			
+		},
+		onLoad() {
 		}
 	}
 </script>

@@ -1,1 +1,1 @@
-<view>{{'cheak seat\n\t'+timestamp+''}}</view>
+<view><my-navbar vue-id="3f8990e2-1" leftText="预定位置" leftIcon="arrow-left" custom="{{false}}" bgColor="#ffffff" autoBack="{{true}}" leftIconSize="40" bind:__l="__l"></my-navbar><view></view></view>
