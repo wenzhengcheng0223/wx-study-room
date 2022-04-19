@@ -88,7 +88,7 @@
 		},
 		onLoad() {
 			const that = this
-			getHitokoto("k", "json", 20).then(res => {
+			getHitokoto("k", "json", 30).then(res => {
 				res.forEach(function(res) {
 					if (res !== null) {
 						uni.setStorageSync('hitokoto', JSON.stringify(res.data))

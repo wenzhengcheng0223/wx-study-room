@@ -32,7 +32,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="ont-toke" :style="{top: oneTokeMarginTop +'rpx;' }">
+		<view class="ont-toke" style="margin: auto 40rpx;margin-top: 20rpx;">
 			<u--text :bold="false" size="24" color="#353535" align="center" :text='oneToke' />
 		</view>
 		<my-tabbar></my-tabbar>
@@ -292,8 +292,8 @@
 	}
 
 	.ont-toke {
-		position: absolute;
-		width: 100%;
+		// position: absolute;
+		// width: 100%;
 		// background-color: #4CD964;
 		// margin-top: ;
 	}

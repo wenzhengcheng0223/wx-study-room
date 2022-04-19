@@ -30,10 +30,6 @@
   padding: 40rpx;
   border-radius: 20rpx;
 }
-.ont-toke {
-  position: absolute;
-  width: 100%;
-}
 .time {
   margin-left: 20rpx;
 }

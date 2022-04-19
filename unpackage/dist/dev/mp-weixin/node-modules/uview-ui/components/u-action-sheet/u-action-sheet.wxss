@@ -41,7 +41,7 @@ view.data-v-6766c527, scroll-view.data-v-6766c527, swiper-item.data-v-6766c527 {
 }
 .u-action-sheet__header.data-v-6766c527 {
   position: relative;
-  padding: 30px 30px 12px 30px;
+  padding: 20px 30px 12px 30px;
 }
 .u-action-sheet__header__title.data-v-6766c527 {
   font-size: 18px;
@@ -52,7 +52,7 @@ view.data-v-6766c527, scroll-view.data-v-6766c527, swiper-item.data-v-6766c527 {
 .u-action-sheet__header__icon-wrap.data-v-6766c527 {
   position: absolute;
   right: 20px;
-  top: 33px;
+  top: 23px;
 }
 .u-action-sheet__description.data-v-6766c527 {
   font-size: 13px;

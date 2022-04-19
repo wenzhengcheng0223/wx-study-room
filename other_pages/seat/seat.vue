@@ -49,14 +49,15 @@
 					</view>
 					<view style="margin-top: 30rpx; width: 100%; padding: 20rpx;">
 						<view class="tag-item">
-							<view class="" v-for="(item, index) in radios" :key="index" style="margin-left: 30rpx;margin-bottom: 40rpx;">
+							<view class="" v-for="(item, index) in radios" :key="index"
+								style="margin-left: 30rpx;margin-bottom: 40rpx;">
 								<u-tag :text="`${index + 1} 小时`" :plain="!item.checked" type="info" :name="index"
 									shape="circle" size="medium" @click="radioClick">
 								</u-tag>
 							</view>
 							<view style="margin-left: 30rpx;">
-								<u-tag text="到关店" :plain="!endChecked" type="info" name="end"
-									shape="circle" size="medium" @click="endClick">
+								<u-tag text="到关店" :plain="!endChecked" type="info" name="end" shape="circle"
+									size="medium" @click="endClick">
 								</u-tag>
 							</view>
 						</view>
@@ -67,16 +68,16 @@
 						<p>{{orderTotal ==0 ? '请选择': '已选择'}}</p>
 					</view>
 					<view style="margin-left: 20rpx;">
-						<u--text :bold="true" size="30" color="#35a5ed" 
-						:text="`${orderHours==0? '': orderHours+'小时'} ${orderTotal%1==0.5? '30分钟': ''}`" />
-						
+						<u--text :bold="true" size="30" color="#35a5ed"
+							:text="`${orderHours==0? '': orderHours+'小时'} ${orderTotal%1==0.5? '30分钟': ''}`" />
+
 					</view>
 					<view style="margin-left: 20rpx;">
-						<u-tag text="+1小时"  size="mini" @click="addHours">
+						<u-tag text="+1小时" size="mini" @click="addHours">
 						</u-tag>
 					</view>
 					<view style="margin-left: 20rpx;">
-						<u-tag text="+30分钟"  size="mini" @click="addMinutes">
+						<u-tag text="+30分钟" size="mini" @click="addMinutes">
 						</u-tag>
 					</view>
 				</view>
@@ -116,22 +117,23 @@
 				label: '',
 				switchValue: false,
 				radios: [],
-				hours: 10, //小时差
+				hours: 0, //小时差
 				total: 0, //小时差 单位为 30分钟
-				orderTotal:0,
-				endChecked:false,
-				orderHours:0,
+				orderTotal: 0,
+				endChecked: false,
+				orderHours: 0,
 			}
 		},
 		methods: {
 			setLabel() {
 				var weekArr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
 				var date = new Date(this.orderTimestamp)
-				this.label = uni.$u.date(this.orderTimestamp, "mm月dd日") + " ( " + weekArr[date.getDay()] + ") " + uni.$u.date(this.orderTimestamp, 'hh:MM')
+				this.label = uni.$u.date(this.orderTimestamp, "mm月dd日") + " ( " + weekArr[date.getDay()] + ") " + uni.$u
+					.date(this.orderTimestamp, 'hh:MM')
 
 			},
 			radioClick(name) {
-				this.orderTotal = name+1
+				this.orderTotal = name + 1
 				this.orderHours = parseInt(this.orderTotal)
 				console.log(this.orderTotal)
 				this.endChecked = false
@@ -139,7 +141,7 @@
 					item.checked = index === name ? true : false
 				})
 			},
-			endClick(){
+			endClick() {
 				this.orderTotal = this.total
 				this.orderHours = parseInt(this.orderTotal)
 				this.endChecked = true
@@ -147,11 +149,10 @@
 					item.checked = false
 				})
 			},
-			addHours(){
-				this.orderTotal+=1
-				if(this.orderTotal > this.total)
-				{
-					this.orderTotal -=1
+			addHours() {
+				this.orderTotal += 1
+				if (this.orderTotal > this.total) {
+					this.orderTotal -= 1
 					uni.showToast({
 						title: '超过最大可预约时间',
 						duration: 2000,
@@ -160,10 +161,9 @@
 				}
 				this.orderHours = parseInt(this.orderTotal)
 			},
-			addMinutes(){
-				this.orderTotal+= 0.5
-				if(this.orderTotal > this.total)
-				{
+			addMinutes() {
+				this.orderTotal += 0.5
+				if (this.orderTotal > this.total) {
 					this.orderTotal -= 0.5
 					uni.showToast({
 						title: '超过最大可预约时间',
@@ -173,17 +173,27 @@
 				}
 				this.orderHours = parseInt(this.orderTotal)
 			},
-			toCheck(){
-				var expiration = new Date(this.orderTimestamp)
-				expiration.setHours(expiration.getHours()+parseInt(this.orderTotal))
-				this.orderTotal % 1 == 0.5 ? expiration.setMinutes(expiration.getMinutes()+30) : expiration.setMinutes(expiration.getMinutes())
-				uni.$u.route('/other_pages/check-seat/check-seat',{
-					startTimestamp: this.orderTimestamp,
-					endTimestamp: expiration.getTime()
-				})
+			toCheck() {
+				if (this.orderTotal == 0) {
+					uni.showToast({
+						title: '请选择预约时长',
+						duration: 2000,
+						icon: 'none'
+					});
+				} else {
+					var expiration = new Date(this.orderTimestamp)
+					expiration.setHours(expiration.getHours() + parseInt(this.orderTotal))
+					this.orderTotal % 1 == 0.5 ? expiration.setMinutes(expiration.getMinutes() + 30) : expiration
+						.setMinutes(expiration.getMinutes())
+					uni.$u.route('/other_pages/check-seat/check-seat', {
+						startTimestamp: this.orderTimestamp,
+						endTimestamp: expiration.getTime(),
+						orderTotal: this.orderTotal
+					})
+				}
 			},
 			// 获取关店时间与预定时间的小时差
-			setHours(){
+			setHours() {
 				var date = new Date(this.orderTimestamp)
 				var now = new Date(new Date(this.orderTimestamp).setHours(23))
 				now.setMinutes(0)
@@ -194,18 +204,22 @@
 				this.total = this.hours + minutes
 				console.log(this.total)
 				for (var i = 0; i < this.hours; i++) {
-					if( i > 5 ) break
+					if (i > 5) break
 					this.radios.push({
 						checked: false
 					})
 				}
-				
-				
+
+
 			}
 		},
 		onLoad() {
 			this.setLabel()
 			this.setHours()
+		},
+		onHide() {
+			console.log("hide")
+			// this.orderTotal
 		}
 	}
 </script>
@@ -220,7 +234,7 @@
 	}
 
 	.tag-item {
-		
+
 		width: 90%;
 		height: auto;
 		display: flex;
