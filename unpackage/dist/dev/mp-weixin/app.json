@@ -10,7 +10,8 @@
       "root": "other_pages",
       "pages": [
         "seat/seat",
-        "check-seat/check-seat"
+        "check-seat/check-seat",
+        "payment/payment"
       ]
     }
   ],

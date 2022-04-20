@@ -16,7 +16,7 @@
 				</view>
 				<!-- 舒适区 -->
 				<view class="vip">
-					<u--text :bold="false" size="28" color="#6f6f6f" text="V区舒适区·舒适区" align="center" />
+					<u--text :bold="false" size="28" color="#303133" text="V区舒适区·舒适区" align="center" />
 					<view style="margin-top: 40rpx;">
 						<view style="display: flex; flex-wrap: wrap; width: 100%;">
 							<view v-for="(index) in 10" :key="index" style="margin-left: 60rpx;margin-bottom: 40rpx;"
@@ -31,7 +31,7 @@
 				</view>
 				<!-- 经济区 -->
 				<view class="vip">
-					<u--text :bold="false" size="28" color="#6f6f6f" text="W区经济座·经济区" align="center" />
+					<u--text :bold="false" size="28" color="#303133" text="W区经济座·经济区" align="center" />
 					<view style="margin-top: 40rpx;">
 						<view style="display: flex; flex-wrap: wrap; width: 100%;">
 							<view v-for="(index) in 10" :key="index" style="margin-left: 60rpx;margin-bottom: 40rpx;">
@@ -50,7 +50,7 @@
 			</view>
 			<!-- 底部固定浮动区域 -->
 			<view class="foot">
-				<u--text :bold="true" size="28" color="#6a6a6a" text="MiNa（重庆）大学城店" align="left" />
+				<u--text :bold="true" size="28" color="#303133" text="MiNa（重庆）大学城店" align="left" />
 				<view style="display: flex; justify-content: space-between; margin: 40rpx auto;">
 					<view style="display: flex; flex-direction: row;">
 						<view>
@@ -67,7 +67,7 @@
 						</view>
 					</view>
 					<view style="margin-right: 20rpx;" @click="back">
-						<u--text :bold="true" size="28" color="#ffae21" text="修改" align="left" />
+						<u--text :bold="true" size="28" color="#ff8215" text="修改" align="left" />
 					</view>
 				</view>
 			</view>
@@ -80,9 +80,9 @@
 			<view style="display: flex; justify-content: center; align-items: center;margin-bottom: 20rpx;">
 				<u--image src="/other_pages/static/seat-detail.png" mode="aspectFit"></u--image>
 			</view>
-			<u--text :bold="false" size="28" color="#3b3b3b" text="W区经济座 14号" align="center" />
+			<u--text :bold="false" size="28" color="#303133" text="W区经济座 14号" align="center" />
 			<view style="margin: 40rpx 20rpx;">
-				<u-button color="#35a5ed" size="large" @click="" text="确认座位"></u-button>
+				<u-button color="#35a5ed" size="large" @click="toPayment" text="确认座位"></u-button>
 			</view>
 		</u-action-sheet>
 	</view>
@@ -118,6 +118,11 @@
 		methods: {
 			back() {
 				uni.navigateBack()
+			},
+			toPayment(){
+				uni.$u.route('/other_pages/payment/payment', {
+					
+				})
 			}
 		},
 		onLoad() {

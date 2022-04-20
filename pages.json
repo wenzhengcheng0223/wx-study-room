@@ -55,6 +55,15 @@
                 }
                 
                 }
+                ,{
+                    "path" : "payment/payment",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
 		}
 	],

@@ -16,6 +16,13 @@
                     "name": "",
                     "pathName": "other_pages/check-seat/check-seat",
                     "query": "startTimestamp=1650366013327&endTimestamp=1650373213327&orderTotal=2.5",
+                    "launchMode": "default",
+                    "scene": null
+                },
+                {
+                    "name": "",
+                    "pathName": "other_pages/payment/payment",
+                    "query": "",
                     "scene": null,
                     "launchMode": "default"
                 }
