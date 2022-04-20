@@ -319,8 +319,10 @@
 
 	.ont-toke {
 		position: absolute;
-		width: 100%;
-		// margin: auto 40rpx;
+		left: 40rpx;
+		right: 40rpx;
+		// width: 100%;
+		// padding: auto 40rpx;
 		// text-align: center;
 		// font-size: 24rpx;
 		// color: #353535;
