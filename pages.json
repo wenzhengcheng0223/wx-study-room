@@ -19,13 +19,6 @@
 			}
 
 		}, {
-			"path": "pages/rank/rank",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
 			"path": "pages/mine/mine",
 			"style": {
 				"navigationBarTitleText": "",
@@ -37,6 +30,14 @@
 		{
 			"root":"other_pages",
 			"pages":[
+				{
+					"path": "rank/rank",
+					"style": {
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false
+					}
+				
+				},
 				{
 				    "path" : "seat/seat",
 				    "style" :                                                                                    
