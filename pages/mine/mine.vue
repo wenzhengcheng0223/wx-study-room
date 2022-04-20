@@ -245,7 +245,7 @@
 			},
 			toRank(){
 				uni.navigateTo({
-					url: '../rank/rank'
+					url: '/other_pages/rank/rank'
 				})
 			}
 		},
