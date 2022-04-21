@@ -8,7 +8,7 @@ export const  appTabbar = [{
 	},
 	{
 		'pagePath': '/pages/order/order',
-		'iconPath': 'account',
+		'iconPath': 'clock',
 		'text': '预约'
 	},
 	{
