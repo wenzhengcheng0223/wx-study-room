@@ -30,7 +30,7 @@
 				<view>
 					<u-row gutter="0">
 						<u-col span="5">
-							<view class="grid-item" style="margin-right: 10rpx;">
+							<view class="grid-item" style="margin-right: 10rpx;" @click="toGrid(0)">
 								<view style="height: 25rpx;">
 								</view>
 								<u-row>
@@ -61,7 +61,7 @@
 						</u-col>
 						<u-col span="1"> </u-col>
 						<u-col span="5" justify="end">
-							<view class="grid-item" style="margin-left: 10rpx;">
+							<view class="grid-item" style="margin-left: 10rpx;" @click="toGrid(1)">
 								<view style="height: 25rpx;">
 								</view>
 								<u-row>
@@ -96,7 +96,7 @@
 				<view style="margin-top: 20rpx;">
 					<u-row gutter="0">
 						<u-col span="5">
-							<view class="grid-item" style="margin-right: 10rpx;">
+							<view class="grid-item" style="margin-right: 10rpx;" @click="toGrid(2)">
 								<view style="height: 25rpx;">
 								</view>
 								<u-row>
@@ -127,7 +127,7 @@
 						</u-col>
 						<u-col span="1"> </u-col>
 						<u-col span="5" justify="end">
-							<view class="grid-item" style="margin-left: 10rpx;">
+							<view class="grid-item" style="margin-left: 10rpx;" @click="toGrid(3)">
 								<view style="height: 25rpx;">
 								</view>
 								<u-row>
@@ -227,6 +227,11 @@
 			return {
 				oneTokeMarginTop: 0,
 				vipPoint: 0,
+				pagePath:[
+					'/other_pages_mine/account/account',
+					'/other_pages_mine/card_package/card_package',
+					'/other_pages_mine/locker/locker',
+					'/other_pages_mine/learn_record/learn_record']
 			}
 		},
 		computed: {
@@ -246,6 +251,11 @@
 			toRank(){
 				uni.navigateTo({
 					url: '/other_pages/rank/rank'
+				})
+			},
+			toGrid(num){
+				uni.navigateTo({
+					url: this.pagePath[num]
 				})
 			}
 		},
