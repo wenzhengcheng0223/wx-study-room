@@ -23,7 +23,8 @@
 		</view>
 		<template>
 			<u-loadmore :status="status" :loading-text="loadingText" :loadmore-text="loadmoreText"
-				:nomore-text="nomoreText" fontSize="20" :line="true" loadingIcon="semicircle" marginBottom="30" />
+				:nomore-text="nomoreText" fontSize="20" :line="true" loadingIcon="semicircle" marginBottom="30"
+				@loadmore="loadmore" />
 		</template>
 	</view>
 </template>
@@ -53,7 +54,9 @@
 			}
 		},
 		methods: {
-
+			loadmore() {
+				if (this.status == 'loadmore') this.$emit('loadmore');
+			}
 		},
 
 
