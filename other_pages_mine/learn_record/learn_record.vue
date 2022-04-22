@@ -62,9 +62,9 @@
 				index: 0,
 				show: false,
 				status: 'loadmore',
-				loadingText: '努力加载中',
-				loadmoreText: '轻轻上拉',
-				nomoreText: '实在没有了',
+				loadingText: '努力加载中,先喝杯茶',
+				loadmoreText: '上拉或点击加载更多',
+				nomoreText: '我也是有底线的',
 				page: 0,
 				listIndex: 4
 
