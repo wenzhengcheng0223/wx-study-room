@@ -12,17 +12,17 @@
 				</view>
 				<view style="margin-top: 40rpx;display: flex; justify-content: center;width: 100%;align-items: center;">
 					<view>
-						<u--text :bold="true" size="50" color="#35a5ed" text="40" align="right" />	
+						<u--text :bold="true" size="50" color="#35a5ed" text="40" align="right" />
 					</view>
 					<view style="margin-bottom: -12rpx;margin-left: 10rpx;">
 						<u--text :bold="true" size="26" color="#35a5ed" text="点" align="left" />
 					</view>
-				</view>					
+				</view>
 			</view>
 		</view>
 		<view class="foot-button">
 			<view>
-				<u-button color="#35a5ed" size="large" @click="" text="立即充值"></u-button>
+				<u-button color="#35a5ed" size="large" @click="toRecharge" text="立即充值"></u-button>
 			</view>
 		</view>
 	</view>
@@ -36,13 +36,17 @@
 			}
 		},
 		methods: {
-
+			toRecharge() {
+				uni.navigateTo({
+					url: "/other_pages/recharge/recharge"
+				})
+			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	.foot-button{
+	.foot-button {
 		position: fixed;
 		bottom: 0;
 		left: 0;
