@@ -127,14 +127,14 @@
 							</u-row>
 						</view>
 					</view>
-					
+
 				</view>
 			</view>
 			<view style="height: 100rpx;">
-		
+
 			</view>
 		</scroll-view>
-		
+
 		<view class="foot">
 			<view style="margin: 30rpx 80rpx;">
 				<u-row>
@@ -143,9 +143,9 @@
 					</u-col>
 					<u-col span="9">
 						<view style="font-size: 26rpx;">
-						<p>P_Peaceful</p>
-						<p>累计学习10小时</p>
-							
+							<p>P_Peaceful</p>
+							<p>累计学习10小时</p>
+
 						</view>
 					</u-col>
 				</u-row>
