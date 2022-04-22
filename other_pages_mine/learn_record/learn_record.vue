@@ -11,7 +11,7 @@
 				:show="show" iconSize="240" width="400" height="400" text="记录为空">
 			</u-empty>
 			<my-learn-record :show="!show" :status="status" :loading-text="loadingText" :loadmore-text="loadmoreText"
-				:nomore-text="nomoreText" :listIndex="listIndex"></my-learn-record>
+				:nomore-text="nomoreText" :listIndex="listIndex" @loadmore="loadmore"></my-learn-record>
 
 		</view>
 		<view v-if="index==1">
