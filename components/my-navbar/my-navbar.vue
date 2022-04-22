@@ -1,8 +1,8 @@
 <template>
-	
+
 	<view class="u-page__item">
-		<u-navbar :leftText="leftText" :show="show" :title="title" :autoBack="autoBack" :custom="custom" :bgColor="bgColor"
-			placeholder="true" @leftClick="showMenu" v-if="custom">
+		<u-navbar :leftText="leftText" :show="show" :title="title" :autoBack="autoBack" :custom="custom"
+			:bgColor="bgColor" placeholder="true" @leftClick="showMenu" v-if="custom">
 			<view class="u-nav-slot my-text" slot="left">
 				<view style="width: 260rpx;">
 					<u--text :lines="1" :bold="true" size="36" :selectable="false" :text="store" />
@@ -15,12 +15,12 @@
 			</view>
 		</u-navbar>
 		<u-navbar :leftIcon="leftIcon" :leftText="leftText" :title="title" :autoBack="autoBack" :custom="custom"
-			:bgColor="bgColor" placeholder="true" :titleStyle="titleStyle" :leftIconSize="leftIconSize" 
+			:bgColor="bgColor" placeholder="true" :titleStyle="titleStyle" :leftIconSize="leftIconSize"
 			:leftIconColor="leftIconColor" v-else="custom">
 
 		</u-navbar>
-		
-	
+
+
 	</view>
 </template>
 
@@ -49,12 +49,12 @@
 				type: String
 			},
 			leftIcon: {
-				default: " ",
+				default: "",
 				type: String
 			},
 			show: {
 				default: false,
-				type:Boolean
+				type: Boolean
 			},
 			titleStyle: {
 				type: [String, Object],
@@ -73,15 +73,15 @@
 		},
 		data() {
 			return {
-				
+
 				store: 'MiNa（重庆）大学城店'
 			};
 		},
 		methods: {
 			showMenu() {
 				// this.show = true
-				console.log("navbar showMenu "+this.show)
-				
+				console.log("navbar showMenu " + this.show)
+
 				this.$emit('changeShow')
 
 			},
