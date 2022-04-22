@@ -109,7 +109,7 @@
 			return {
 				date: '',
 				time: '',
-				show: true
+				show: false
 			}
 		},
 		computed: {
