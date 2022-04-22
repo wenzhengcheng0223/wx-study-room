@@ -23,7 +23,7 @@
 		</view>
 		<template>
 			<u-loadmore :status="status" :loading-text="loadingText" :loadmore-text="loadmoreText"
-				:nomore-text="nomoreText" />
+				:nomore-text="nomoreText" fontSize="20" :line="true" loadingIcon="semicircle" marginBottom="30" />
 		</template>
 	</view>
 </template>
@@ -39,18 +39,6 @@
 				default: 'loadmore',
 				type: String,
 			},
-			loadingText: {
-				default: '努力加载中',
-				type: String,
-			},
-			loadmoreText: {
-				default: '轻轻上拉',
-				type: String,
-			},
-			nomoreText: {
-				default: '实在没有了',
-				type: String,
-			},
 			listIndex: {
 				default: 4,
 				type: Number
@@ -58,7 +46,11 @@
 
 		},
 		data() {
-			return {}
+			return {
+				loadingText: '努力加载中,先喝杯茶',
+				loadmoreText: '上拉或点击加载更多',
+				nomoreText: '我也是有底线的',
+			}
 		},
 		methods: {
 
