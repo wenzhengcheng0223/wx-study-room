@@ -1,6 +1,6 @@
 <template>
 	<view v-if="show">
-		<view v-for="index in 10" :key="index">
+		<view v-for="index in listIndex" :key="index">
 			<view class="card-item">
 				<view style="display: flex;justify-content: space-between;align-items: center;">
 					<!-- 店名 -->
@@ -47,12 +47,15 @@
 						<u-button color="#35a5ed" shape="circle" @click="cancel" text="取消订座"></u-button>
 					</view>
 					<view style="margin-left: 40rpx; width: 100%;">
-						<u-button color="#35a5ed" shape="circle"  @click="advance" text="提前开始"></u-button>
+						<u-button color="#35a5ed" shape="circle" @click="advance" text="提前开始"></u-button>
 					</view>
 				</view>
 			</view>
 		</view>
-
+		<template>
+			<u-loadmore :status="status" :loading-text="loadingText" :loadmore-text="loadmoreText"
+				:nomore-text="nomoreText" @loadmore="loadmore" />
+		</template>
 	</view>
 </template>
 
@@ -62,6 +65,26 @@
 			show: {
 				default: true,
 				type: Boolean
+			},
+			status: {
+				default: 'loadmore',
+				type: String,
+			},
+			loadingText: {
+				default: '努力加载中',
+				type: String,
+			},
+			loadmoreText: {
+				default: '轻轻上拉',
+				type: String,
+			},
+			nomoreText: {
+				default: '实在没有了',
+				type: String,
+			},
+			listIndex: {
+				default: 4,
+				type: Number
 			}
 		},
 		data() {
@@ -70,11 +93,14 @@
 			}
 		},
 		methods: {
-			cancel(item){
+			cancel(item) {
 				console.log("cancel")
 			},
-			advance(item){
+			advance(item) {
 				console.log("advance")
+			},
+			loadmore() {
+				if (this.status == 'loadmore') this.$emit('loadmore');
 			}
 		}
 	}

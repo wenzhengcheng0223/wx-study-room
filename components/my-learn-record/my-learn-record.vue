@@ -1,6 +1,6 @@
 <template>
 	<view v-if="show">
-		<view v-for="index in 10" :key="index">
+		<view v-for="index in listIndex" :key="index">
 			<view class="card-item">
 				<view style="display: flex;justify-content: flex-start;align-items: center;">
 					<view>
@@ -21,7 +21,10 @@
 				</view>
 			</view>
 		</view>
-
+		<template>
+			<u-loadmore :status="status" :loading-text="loadingText" :loadmore-text="loadmoreText"
+				:nomore-text="nomoreText" />
+		</template>
 	</view>
 </template>
 
@@ -30,17 +33,38 @@
 		props: {
 			show: {
 				default: true,
-				type: Boolean
+				type: Boolean,
+			},
+			status: {
+				default: 'loadmore',
+				type: String,
+			},
+			loadingText: {
+				default: '努力加载中',
+				type: String,
+			},
+			loadmoreText: {
+				default: '轻轻上拉',
+				type: String,
+			},
+			nomoreText: {
+				default: '实在没有了',
+				type: String,
+			},
+			listIndex: {
+				default: 4,
+				type: Number
 			}
+
 		},
 		data() {
-			return {
-
-			}
+			return {}
 		},
 		methods: {
 
-		}
+		},
+
+
 	}
 </script>
 
