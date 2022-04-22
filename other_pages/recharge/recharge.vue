@@ -139,6 +139,15 @@
 			<u-button text="请选择充值额度" :plain="true" type="primary" @click="click" v-if="money==0"></u-button>
 			<u-button v-else :text="'确定支付￥'+money+'.00'" type="primary" @click="pay"></u-button>
 		</view>
+		<view style="padding: 50rpx auto;margin: 80rpx 40rpx;">
+			<u--text :bold="false" size="26" color="#868686" text="温馨提示" align="left" />
+			<view style="margin-top: 20rpx; font-size: 22rpx; line-height: 40rpx; color: #868686;">
+				<p>1.点是自习室平台.上可用于消费的支付凭证，仅限于该平台预约订座和其他服务使用。</p>
+				<p>2.点充值成功后，不能退款，提现或转赠他人。如有问题，请联系店铺，或者点击我的-意见反馈进行反馈。</p>
+				<p></p>
+			</view>
+
+		</view>
 	</view>
 </template>
 
