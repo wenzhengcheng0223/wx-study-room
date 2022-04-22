@@ -65,6 +65,15 @@
                 }
                 
                 }
+                ,{
+                    "path" : "recharge/recharge",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
 		},
 		{
