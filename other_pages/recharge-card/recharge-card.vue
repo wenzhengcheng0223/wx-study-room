@@ -33,7 +33,9 @@
 						:activeStyle="activeStyle" :scrollable="false"></u-tabs>
 				</view>
 			</view>
+			<view>
 
+			</view>
 
 		</view>
 		<!-- 底部按钮区域 -->
