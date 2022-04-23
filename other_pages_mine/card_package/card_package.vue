@@ -17,7 +17,7 @@
 		</view>
 		<view class="foot-button">
 			<view>
-				<u-button color="#35a5ed" size="large" @click="" text="开通其他卡"></u-button>
+				<u-button color="#35a5ed" size="large" @click="toCard" text="开通其他卡"></u-button>
 			</view>
 		</view>
 	</view>
@@ -31,7 +31,11 @@
 			}
 		},
 		methods: {
-
+			toCard() {
+				uni.navigateTo({
+					url: "/other_pages/recharge-card/recharge-card"
+				})
+			}
 		}
 	}
 </script>
