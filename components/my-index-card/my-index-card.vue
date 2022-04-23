@@ -15,7 +15,7 @@
 			</view>
 			<view class="recharge-right">
 				<!-- 卡券套餐 -->
-				<view class="pay-card">
+				<view class="pay-card" @click="toCard">
 					<view style=" position:absolute; top:28rpx; left: 68rpx;">
 						<u-icon name="/static/index/bag.png" size="38"></u-icon>
 					</view>
@@ -49,6 +49,11 @@
 			toRecharge() {
 				uni.navigateTo({
 					url: "/other_pages/recharge/recharge"
+				})
+			},
+			toCard() {
+				uni.navigateTo({
+					url: "/other_pages/recharge-card/recharge-card"
 				})
 			}
 		}
