@@ -83,6 +83,15 @@
                 }
                 
                 }
+                ,{
+                    "path" : "recharge-locker/recharge-locker",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
 		},
 		{
