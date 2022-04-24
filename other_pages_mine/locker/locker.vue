@@ -17,7 +17,7 @@
 		</view>
 		<view class="foot-button">
 			<view>
-				<u-button color="#35a5ed" size="large" @click="" text="开通储物柜"></u-button>
+				<u-button color="#35a5ed" size="large" @click="toLocker" text="开通储物柜"></u-button>
 			</view>
 		</view>
 	</view>
@@ -31,7 +31,11 @@
 			}
 		},
 		methods: {
-
+			toLocker() {
+				uni.navigateTo({
+					url: "/other_pages/recharge-locker/recharge-locker"
+				})
+			}
 		}
 	}
 </script>
