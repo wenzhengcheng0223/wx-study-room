@@ -74,6 +74,15 @@
                 }
                 
                 }
+                ,{
+                    "path" : "recharge-card/recharge-card",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
 		},
 		{
