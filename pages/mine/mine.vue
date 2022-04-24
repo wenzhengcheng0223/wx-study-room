@@ -161,8 +161,8 @@
 			</view>
 			<!-- 排行榜和意见反馈区域 -->
 			<view class="rank-save">
-				<view class="item">
-					<view class="rank" @click="toRank">
+				<view class="item" @click="toRank">
+					<view class="rank">
 						<u-row>
 							<u-col span="1">
 								<view style="background-color: #ffffff;margin-left: 20rpx;width: 60rpx;">
@@ -227,11 +227,12 @@
 			return {
 				oneTokeMarginTop: 0,
 				vipPoint: 0,
-				pagePath:[
+				pagePath: [
 					'/other_pages_mine/account/account',
 					'/other_pages_mine/card_package/card_package',
 					'/other_pages_mine/locker/locker',
-					'/other_pages_mine/learn_record/learn_record']
+					'/other_pages_mine/learn_record/learn_record'
+				]
 			}
 		},
 		computed: {
@@ -248,12 +249,12 @@
 					}
 				})
 			},
-			toRank(){
+			toRank() {
 				uni.navigateTo({
 					url: '/other_pages/rank/rank'
 				})
 			},
-			toGrid(num){
+			toGrid(num) {
 				uni.navigateTo({
 					url: this.pagePath[num]
 				})
@@ -339,6 +340,6 @@
 		// background-color: #4CD964;
 		// margin-top: ;
 		// size="24" color="#353535";
-		
+
 	}
 </style>
