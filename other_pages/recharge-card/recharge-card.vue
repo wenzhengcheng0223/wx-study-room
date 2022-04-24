@@ -26,7 +26,7 @@
 			</view>
 		</view>
 		<!-- 卡券内容区域 -->
-		<view style="margin-top: 20rpx; background-color: #ffffff;">
+		<view style="margin-top: 20rpx;background-color: #ffffff">
 			<view style="border-bottom: 2rpx solid #e5e5e5;">
 				<view style="margin: auto 80rpx;">
 					<u-tabs :list="tabs" @click="tabsClick" lineWidth="140rpx" lineHeight="4rpx"
@@ -34,13 +34,55 @@
 				</view>
 			</view>
 			<view>
+				<view class="card-comm">
+					<view style="width: 200rpx;">
+						<view style="align-items: center;justify-content: center;display: flex;margin-bottom: 10rpx;">
+							<u-icon name="/other_pages/static/package/card.png" size="100"></u-icon>
+						</view>
+						<view>
+							<u--text :bold="true" size="28" color="#35a5ed" :text="card.frequency+'天'" align="center" />
+						</view>
+						<view style="margin-top: 10rpx;">
+							<u--text :bold="false" size="22" color="#868686" :text="'购买后'+card.term+'天内有效'"
+								align="center" />
+						</view>
+					</view>
+					<view>
+						<view style="align-items: center;justify-content: center;display: flex;margin-bottom: 10rpx;">
+							<u-icon name="/other_pages/static/package/seat.png" size="100"></u-icon>
+						</view>
+						<view>
+							<u--text :bold="true" size="28" color="#35a5ed" :text="card.areaTitle+'可用'"
+								align="center" />
+						</view>
+						<view style="margin-top: 10rpx;">
+							<u--text :bold="false" size="22" color="#868686" :text="'店内'+card.areaTitle+'可用'"
+								align="center" />
+						</view>
+					</view>
+				</view>
 
 			</view>
-
+			<view class="card-text">
+				<u--text :bold="false" size="30" color="#303133" :text="card.title" align="left" />
+				<view style="display: flex;justify-content: space-between;align-items: center;margin-top: 20rpx;">
+					<view style="display: flex;justify-content: flex-start; align-items: center;">
+						<u-icon name="/other_pages/static/package/card.png" size="60"></u-icon>
+						<view style="margin-left: 30rpx;margin-top: 10rpx;">
+							<u--text :bold="false" size="22" color="#868686"
+								:text="'购买后'+card.term+'天内有效,'+card.areaTitle+'可用'" align="center" />
+						</view>
+					</view>
+					<view>
+						<u--text :bold="false" size="30" color="#303133" text="1张" align="left" />
+					</view>
+				</view>
+			</view>
+			<view style="height: 20rpx;"></view>
 		</view>
 		<!-- 底部按钮区域 -->
-		<view>
-
+		<view class="card-button">
+			<u-button text="确定支付" size="large" type="primary" @click="pay"></u-button>
 		</view>
 	</view>
 </template>
@@ -49,6 +91,14 @@
 	export default {
 		data() {
 			return {
+				// card: { 参数说明
+				// 	title: '', 优惠卡标题
+				// 	money: 0, 金额
+				// 	frequency: 0, 次数
+				// 	term: 0, 有效期
+				// 	area: 0 区域 0为舒适区 1为经济区
+				//  areaTitle:'舒适区' 区域名字
+				// }
 				indicatorDots: false,
 				autoplay: false,
 				interval: 2000,
@@ -59,25 +109,33 @@
 						title: '全天体验卡',
 						money: 29.90,
 						term: 1,
-						frequency: 1
+						frequency: 1,
+						area: 0,
+						areaTitle: '舒适区'
 					},
 					{
 						title: '20次体验卡—经济区',
-						money: 500.00,
+						money: 500.00.toFixed(2),
+						frequency: 20,
 						term: 365,
-						frequency: 20
+						area: 1,
+						areaTitle: '经济区'
 					},
 					{
 						title: '活动周卡',
-						money: 179.00,
+						money: 179.00.toFixed(2),
+						frequency: 7,
 						term: 7,
-						frequency: 7
+						area: 1,
+						areaTitle: '经济区'
 					},
 					{
 						title: '单月冲刺卡—经济区',
-						money: 599.00,
+						money: 599.00.toFixed(2),
+						frequency: 30,
 						term: 30,
-						frequency: 30
+						area: 1,
+						areaTitle: '经济区'
 					}
 
 				],
@@ -92,12 +150,21 @@
 					color: '#35a5ed',
 					fontWeight: 'bold'
 				},
+				card: {
+					title: '',
+					money: 0,
+					frequency: 0,
+					term: 0,
+					area: 0,
+					areaTitle: ''
+				}
 			}
 		},
 		methods: {
 			change(e) {
 				var current = e.detail.current
 				const that = this
+				this.card = this.list[current]
 				console.log(current)
 				if (current == 0) {
 					setTimeout(function() {
@@ -112,7 +179,14 @@
 			},
 			tabsClick(index) {
 				console.log(index)
+			},
+			pay() {
+				console.log("pay")
 			}
+		},
+		onLoad() {
+			this.card = this.list[0]
+			console.log(this.card)
 		}
 	}
 </script>
@@ -137,5 +211,26 @@
 		background-size: cover;
 		border-radius: 15rpx;
 		margin-left: 20rpx;
+	}
+
+	.card-comm {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-radius: 20rpx;
+		border: 3rpx solid #35a5ed;
+		margin: 40rpx;
+		padding: 30rpx 80rpx;
+		background-color: #35a5ed20;
+	}
+
+	.card-text {
+		margin: auto 40rpx;
+		padding: 30rpx 30rpx;
+		background-color: $u-bg-color;
+	}
+
+	.card-button {
+		margin: 40rpx;
 	}
 </style>
