@@ -7,14 +7,23 @@
 				<u-row>
 					<u-col span="2">
 						<view class="user-avatar">
-							<u-avatar src="/static/index/logo.png" size="112"></u-avatar>
+							<u-avatar :src="userInfo.avatarUrl" size="112"></u-avatar>
 						</view>
 					</u-col>
 					<u-col span="8">
-						<view class="user-info">
-							<u--text :bold="false" size="36" text="P_Peaceful" />
+						<view class="user-info" v-if="isLogin">
+							<u--text :bold="false" size="36" :text="userInfo.nickName" />
 							<view style="height: 15rpx;"></view>
-							<u--text :bold="false" size="26" color="#c2c2c2" text="152****9735" />
+							<u--text :bold="false" size="26" color="#c2c2c2" :text="userInfo.phone" v-if="isPhone" />
+							<view v-else style="padding-right: 80rpx;">
+								<u-button type="primary" size="mini" icon="phone" text="获取手机号"
+									open-type="getPhoneNumber" @getphonenumber="getPhoneNumber" />
+							</view>
+
+						</view>
+						<view v-else style="padding-left: 40rpx;" v-else>
+							<u-button type="success" @click="getUserInfo" size="normal" icon="weixin-fill"
+								text="微信用户一键登录" />
 						</view>
 					</u-col>
 					<u-col span="1" offset="1" textAlign="right">
@@ -52,7 +61,7 @@
 										<u-col span="6">
 											<view style="margin-left: 7rpx">
 												<u--text :bold="false" align="left" color="#666666" size="24"
-													:text="vipPoint+'点'" />
+													:text="account.balance+'点'" />
 											</view>
 										</u-col>
 									</u-row>
@@ -83,7 +92,7 @@
 										<u-col span="6">
 											<view style="margin-left: 7rpx">
 												<u--text :bold="false" align="left" color="#666666" size="24"
-													:text="vipPoint+'张卡'" />
+													:text="account.card.length+'张卡'" />
 											</view>
 										</u-col>
 									</u-row>
@@ -214,6 +223,7 @@
 		<view class="ont-toke" :style="{top: oneTokeMarginTop +'rpx;' }">
 			<u--text :bold="false" size="24" color="#353535" align="center" :text='oneToke' />
 		</view>
+
 		<my-tabbar></my-tabbar>
 	</view>
 </template>
@@ -221,24 +231,40 @@
 <script>
 	import {
 		mapState,
-	} from 'vuex'
+		mapMutations
+	} from 'vuex';
+	import {
+		login,
+		phone,
+		userInfo,
+		getBalance,
+		getCard
+	} from '@/config/api.js';
 	export default {
 		data() {
 			return {
 				oneTokeMarginTop: 0,
-				vipPoint: 0,
+
 				pagePath: [
 					'/other_pages_mine/account/account',
 					'/other_pages_mine/card_package/card_package',
 					'/other_pages_mine/locker/locker',
 					'/other_pages_mine/learn_record/learn_record'
-				]
+				],
+				userInfo: {},
+				phone: undefined,
+				isLogin: false,
+				isPhone: false,
+				status: false,
+				code: undefined
 			}
 		},
 		computed: {
-			...mapState(['oneToke'])
+			...mapState(['oneToke', 'account']),
+
 		},
 		methods: {
+			...mapMutations(['setAccount']),
 			setOneTokeMargin() {
 				const _this = this
 				uni.getSystemInfo({
@@ -250,30 +276,190 @@
 				})
 			},
 			toRank() {
-				uni.navigateTo({
-					url: '/other_pages/rank/rank'
-				})
+				console.log(this.isLogin)
+				if (this.isLogin == true) {
+					uni.navigateTo({
+						url: '/other_pages/rank/rank'
+					})
+				} else {
+					uni.$u.toast("请先登录")
+				}
+
 			},
 			toGrid(num) {
-				uni.navigateTo({
-					url: this.pagePath[num]
+				if (this.isLogin) {
+					uni.navigateTo({
+						url: this.pagePath[num]
+					})
+				} else {
+					uni.$u.toast("请先登录")
+				}
+
+			},
+			async toLogin(info) {
+				const {
+					data
+				} = await login({
+					code: this.code
+				}, {
+					header: {
+						'content-type': 'application/x-www-form-urlencoded'
+					},
 				})
+				console.log(data)
+				const that = this;
+				if (data.token != '') {
+					uni.setStorageSync('token', data.token)
+					uni.setStorageSync('status', true)
+					that.status = true
+					userInfo({
+						encryptedData: info.encryptedData,
+						ivStr: info.iv
+					}, {
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						custom: {
+							auth: true
+						}
+					}).then(res => {
+						uni.setStorageSync('userInfo', JSON.stringify(info.userInfo))
+						uni.setStorageSync('isLogin', true)
+						that.userInfo = info.userInfo
+						that.isLogin = true
+						console.log(res)
+						uni.showToast({
+							icon: 'success'
+						})
+					})
+					this.getAccount()
+				}
+
+				setTimeout(() => {
+					uni.hideLoading()
+				}, 2000)
+			},
+			checkLogin() {
+				const that = this
+				uni.login({
+					provider: 'weixin',
+					success(res) {
+						that.code = res.code
+					}
+				})
+
+			},
+			getUserInfo() {
+				const that = this
+				that.checkLogin()
+				uni.getUserProfile({
+					desc: "获取用户信息",
+					success(res) {
+						uni.showLoading({
+							title: "正在登录中"
+						})
+						that.toLogin(res)
+
+					},
+					fail(err) {
+						console.log(err)
+					}
+				})
+			},
+			async getPhoneNumber(e) {
+				console.log(e)
+				const that = this
+				const msg = e.detail.errMsg
+				const code = {
+					code: e.detail.code
+				}
+				if (msg == "getPhoneNumber:ok") {
+					uni.showLoading({
+						title: "正在获取"
+					})
+					phone(code, {
+						header: {
+							'content-type': 'application/x-www-form-urlencoded'
+						},
+						custom: {
+							auth: true
+						}
+					}).then((res) => {
+
+						that.userInfo.phone = res.data.phoneNumber
+						uni.setStorageSync('userInfo', JSON.stringify(that.userInfo))
+						uni.setStorageSync('isPhone', true)
+						that.isPhone = true
+						console.log(that.userInfo)
+						console.log(res)
+						uni.showToast({
+							icon: 'success'
+						})
+					})
+
+				}
+
+			},
+			getAccount() {
+				// let account = {}
+				getBalance({
+					custom: {
+						auth: true
+					}
+				}).then(res => {
+					console.log(res)
+					// account.balance = res.data.balance
+					this.$store.dispatch("getBalance", res.data.balance)
+				})
+				getCard({
+					custom: {
+						auth: true
+					}
+				}).then(res => {
+					// account.card = res.data
+					this.$store.dispatch("getCard", res.data)
+				})
+				console.log("getAccount---------")
+
+			}
+
+		},
+		onShow() {
+			console.log("onShow----------")
+			var isLogin = uni.getStorageSync('isLogin')
+			const that = this
+			if (isLogin != null && isLogin != '') {
+				this.getAccount()
 			}
 		},
 		onReady() {
+			console.log("onReady---------")
 			this.setOneTokeMargin()
-
 		},
-		mounted() {
-			// const _this = this
-			// uni.createSelectorQuery().select(".container").boundingClientRect((data) => {
-			// 	console.log(data.height)
-			// 	_this.containerHeight = data.height
-			// 	_this.oneTokeMarginTop = _this.windowHeight - _this.containerHeight - 30
-			// 	console.log("margin-top: "+_this.oneTokeMarginTop)
-			// }).exec(function() {
+		onLoad() {
+			var isLogin = uni.getStorageSync('isLogin')
+			const that = this
+			if (isLogin != null && isLogin != '') {
+				// this.getAccount()
+				this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
+				this.isLogin = isLogin
+				var isPhone = uni.getStorageSync('isPhone')
+				if (isPhone != null && isPhone != '') {
+					this.isPhone = isPhone
+				} else {
+					this.isPhone = false
+				}
 
-			// })
+			} else {
+				this.userInfo = {}
+				this.isLogin = false
+			}
+			uni.login({
+				provider: 'weixin',
+				success(res) {
+					that.code = res.code
+				}
+			})
 		}
 	}
 </script>
