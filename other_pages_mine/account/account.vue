@@ -12,7 +12,7 @@
 				</view>
 				<view style="margin-top: 40rpx;display: flex; justify-content: center;width: 100%;align-items: center;">
 					<view>
-						<u--text :bold="true" size="50" color="#35a5ed" text="40" align="right" />
+						<u--text :bold="true" size="50" color="#35a5ed" :text="account.balance" align="right" />
 					</view>
 					<view style="margin-bottom: -12rpx;margin-left: 10rpx;">
 						<u--text :bold="true" size="26" color="#35a5ed" text="点" align="left" />
@@ -29,11 +29,16 @@
 </template>
 
 <script>
+	import {
+		mapState,
+		mapMutations
+	} from 'vuex';
 	export default {
 		data() {
-			return {
-
-			}
+			return {}
+		},
+		computed: {
+			...mapState(['oneToke', 'account']),
 		},
 		methods: {
 			toRecharge() {
@@ -41,7 +46,8 @@
 					url: "/other_pages/recharge/recharge"
 				})
 			}
-		}
+		},
+		onShow() {}
 	}
 </script>
 
