@@ -1,7 +1,8 @@
-
 import Vue from 'vue'
 import Vuex from 'vuex'
-import {appTabbar} from './config.js'
+import {
+	appTabbar
+} from './config.js'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -13,7 +14,12 @@ export default new Vuex.Store({
 		openid: null,
 		index: 0,
 		tabbar: appTabbar,
-		oneToke: "眼睛是心灵的窗户。—— 达芬奇"
+		oneToke: "眼睛是心灵的窗户。—— 达芬奇",
+		//账户信息
+		account: {
+			balance: 0,
+			card: [{}]
+		}
 	},
 	mutations: {
 		login(state, provider) {
@@ -27,11 +33,19 @@ export default new Vuex.Store({
 		setOpenid(state, openid) {
 			state.openid = openid
 		},
-		setIndex(state, index){
+		setIndex(state, index) {
 			state.index = index
 		},
-		setOneToke(state, oneToke){
+		setOneToke(state, oneToke) {
 			state.oneToke = oneToke
+		},
+		setBalance(state, payload) {
+			console.log(payload)
+			state.account.balance = payload
+		},
+		setCard(state, payload) {
+			console.log(payload)
+			state.account.card = payload
 		}
 	},
 	getters: {
@@ -39,8 +53,18 @@ export default new Vuex.Store({
 	},
 	actions: {
 		// lazy loading openid
-		
-	}
-	
-})
+		getBalance({
+			commit
+		}, payload) {
 
+			commit('setBalance', payload)
+
+		},
+		getCard({
+			commit
+		}, payload) {
+			commit('setCard', payload)
+		}
+	}
+
+})
