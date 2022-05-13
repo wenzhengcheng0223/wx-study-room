@@ -1,13 +1,13 @@
 <template>
 	<view v-if="show">
-		<view v-for="index in listIndex" :key="index">
+		<view v-for="(item,index) in list" :key="index">
 			<view class="card-item">
 				<view style="display: flex;justify-content: space-between;align-items: center;">
 					<!-- 店名 -->
 					<view style="display: flex;justify-content: flex-start;align-items: center;">
 						<u-icon name="/other_pages_mine/static/store.png" size="35"></u-icon>
 						<view style="margin-left: 20rpx;">
-							<u--text :bold="false" size="30" color="#303133" text="MiNa（重庆）大学城店" align="center" />
+							<u--text :bold="false" size="30" color="#303133" :text="item.roomName" align="center" />
 						</view>
 					</view>
 					<!-- 订单状态 -->
@@ -16,7 +16,7 @@
 							<u-icon name="/other_pages_mine/static/stamps.png" size="28"></u-icon>
 						</view>
 						<view style="margin-left: 10rpx;">
-							<u--text :bold="false" size="25" color="#a686ba" text="未消费" align="center" />
+							<my-pay-status :status="item.payStatus"></my-pay-status>
 						</view>
 					</view>
 				</view>
@@ -26,7 +26,8 @@
 						<u-icon name="/other_pages_mine/static/seat.png" size="35"></u-icon>
 					</view>
 					<view style="margin-left: 20rpx;">
-						<u--text :bold="false" size="30" color="#303133" text="V区舒适座·舒适区·V1" align="center" />
+						<u--text :bold="false" size="30" color="#303133"
+							:text="item.areaName+'·'+'舒适区'+'·'+item.seatNum" align="center" />
 					</view>
 				</view>
 				<!-- 订座时间 -->
@@ -37,23 +38,23 @@
 					<view style="margin-left: 20rpx; width: 100%;display: flex;">
 						<u--text :bold="false" size="30" color="#303133" text="订座时间" align="left" />
 						<view style="margin-left: 10rpx;">
-							<u--text :bold="false" size="30" color="#303133" text="2022年04月20日 12:00" align="left" />
+							<u--text :bold="false" size="30" color="#303133" :text="item.startTime" align="left" />
 						</view>
 					</view>
 				</view>
 				<!-- 订单底部按钮 -->
-				<view style="display: flex;justify-content: space-between; margin-top: 40rpx;">
+				<view style="display: flex;justify-content: space-between; margin-top: 40rpx;" v-if="item.payStatus==3">
 					<view style="width: 100%;">
-						<u-button color="#35a5ed" shape="circle" @click="cancel" text="取消订座"></u-button>
+						<u-button color="#35a5ed" shape="circle" @click="cancel(item)" text="取消订座"></u-button>
 					</view>
 					<view style="margin-left: 40rpx; width: 100%;">
-						<u-button color="#35a5ed" shape="circle" @click="advance" text="提前开始"></u-button>
+						<u-button color="#35a5ed" shape="circle" @click="advance(item)" text="提前开始"></u-button>
 					</view>
 				</view>
 			</view>
 		</view>
 		<template>
-			<u-loadmore :status="status" :loading-text="loadingText" :loadmore-text="loadmoreText"
+			<u-loadmore :status="status" :loading-text="loadingText" :loadmore-text="loadmoreText" :isDot="true"
 				:nomore-text="nomoreText" @loadmore="loadmore" fontSize="20" :line="true" loadingIcon="semicircle"
 				marginBottom="30" />
 		</template>
@@ -71,9 +72,8 @@
 				default: 'loadmore',
 				type: String,
 			},
-			listIndex: {
-				default: 4,
-				type: Number
+			list: {
+				type: Array
 			}
 		},
 		data() {
