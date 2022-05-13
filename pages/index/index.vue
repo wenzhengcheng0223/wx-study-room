@@ -6,7 +6,8 @@
 				</my-navbar>
 			</view>
 			<view style="padding: 40rpx 40rpx 30rpx 40rpx;">
-				<u-swiper :list="swiperList" indicator indicatorMode="line" circular height="280" radius="16">
+				<u-swiper :list="swiperList" keyName="url" indicator indicatorMode="line" circular height="280"
+					radius="16">
 				</u-swiper>
 			</view>
 			<view>
@@ -54,11 +55,8 @@
 		</view>
 	</page-meta>
 
-
-
-
 	<view style="max-height: 300rpx;">
-		<my-action-sheet :show="show" @closeShow="closeShow"></my-action-sheet>
+		<my-action-sheet :show="show" :list="storeList" @closeShow="closeShow"></my-action-sheet>
 	</view>
 
 
@@ -70,52 +68,55 @@
 	} from 'common/request/api/hitokoto.js'
 	import {
 		mapState,
-		mapMutations
 	} from 'vuex'
+	import {
+		getSwiper,
+		getStore
+	} from '@/config/api.js'
 	export default {
 		data() {
 			return {
-				swiperList: [
-					'https://cdn.uviewui.com/uview/swiper/swiper3.png',
-					'https://cdn.uviewui.com/uview/swiper/swiper2.png',
-					'https://cdn.uviewui.com/uview/swiper/swiper1.png',
-				],
-				show: false
+				swiperList: [],
+				show: true,
+				storeList: []
 			}
 		},
 		computed: {
-			...mapState(['hasLogin', 'openid','oneToke'])
-		},
-		onLoad() {
-			const that = this
-			getHitokoto("k", "json", 20).then(res => {
-				res.forEach(function(res) {
-					if (res !== null) {
-						uni.setStorageSync('hitokoto', JSON.stringify(res.data))
-						const data = res.data
-						if (data.from_who === null || data.from_who === "佚名") {
-							that.setOneToke(data.hitokoto + '—— ' + data.from)
-						} else {
-							that.setOneToke(data.hitokoto + '—— ' + data.from_who)
-						}
-
-					}
-				})
-			})
-			console.log(this.oneToke)
+			...mapState(['oneToke'])
 		},
 		methods: {
-			...mapMutations(['setOpenid','setOneToke']),
 			changeShow() {
 				this.show = true
 				console.log(" index show = " + this.show)
 
 			},
 			closeShow() {
-
 				this.show = false;
 				console.log("index closeShow " + this.show)
+			},
+			async setSwiper() {
+				const {
+					data: res
+				} = await getSwiper({
+					custom: {
+						auth: true
+					}
+				})
+				this.swiperList = res
+			},
+			async getStoreList() {
+				const {
+					data: res
+				} = await getStore()
+				console.log(res)
+				this.$store.commit('setStore', res.rows[0])
+				this.storeList = res.rows
 			}
+
+		},
+		onLoad() {
+			this.setSwiper()
+			this.getStoreList()
 
 		}
 	}

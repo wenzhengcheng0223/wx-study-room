@@ -244,7 +244,6 @@
 		data() {
 			return {
 				oneTokeMarginTop: 0,
-
 				pagePath: [
 					'/other_pages_mine/account/account',
 					'/other_pages_mine/card_package/card_package',
@@ -366,7 +365,7 @@
 					}
 				})
 			},
-			async getPhoneNumber(e) {
+			getPhoneNumber(e) {
 				console.log(e)
 				const that = this
 				const msg = e.detail.errMsg
@@ -400,27 +399,46 @@
 				}
 
 			},
-			getAccount() {
-				// let account = {}
-				getBalance({
-					custom: {
-						auth: true
+			async getAccount() {
+				try {
+					const {
+						data: balance
+					} = await
+					getBalance({
+						custom: {
+							auth: true,
+							catch: true
+						}
+					})
+					console.log("getAccount-----")
+					this.$store.dispatch("getBalance", balance.data.balance)
+					console.log(balance)
+					const {
+						data: card
+					} = await getCard({
+						custom: {
+							auth: true,
+							catch: true
+						}
+					})
+					this.$store.dispatch("getCard", card.data)
+				} catch (res) {
+					if (res.code == 401) {
+						uni.clearStorageSync()
+						this.initData()
 					}
-				}).then(res => {
-					console.log(res)
-					// account.balance = res.data.balance
-					this.$store.dispatch("getBalance", res.data.balance)
-				})
-				getCard({
-					custom: {
-						auth: true
-					}
-				}).then(res => {
-					// account.card = res.data
-					this.$store.dispatch("getCard", res.data)
-				})
-				console.log("getAccount---------")
+				}
 
+			},
+			initData() {
+				Object.assign(this, {
+					userInfo: {},
+					phone: undefined,
+					isLogin: false,
+					isPhone: false,
+					status: false,
+					code: undefined
+				});
 			}
 
 		},
@@ -428,7 +446,7 @@
 			console.log("onShow----------")
 			var isLogin = uni.getStorageSync('isLogin')
 			const that = this
-			if (isLogin != null && isLogin != '') {
+			if (isLogin == true) {
 				this.getAccount()
 			}
 		},
@@ -439,7 +457,7 @@
 		onLoad() {
 			var isLogin = uni.getStorageSync('isLogin')
 			const that = this
-			if (isLogin != null && isLogin != '') {
+			if (isLogin == true) {
 				// this.getAccount()
 				this.userInfo = JSON.parse(uni.getStorageSync('userInfo'))
 				this.isLogin = isLogin
