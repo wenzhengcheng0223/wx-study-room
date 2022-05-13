@@ -8,7 +8,7 @@
 				</view>
 				<view style="display:flex; flex-direction:row; margin-top: 20rpx;">
 					<view style="width: 305rpx;">
-						<u--text lines="1" :bold="true" size="36" color="#5b5b5b" :text="store" />
+						<u--text lines="1" :bold="true" size="36" color="#5b5b5b" :text="store.roomName" />
 					</view>
 					<view style="margin-top: 10rpx;padding: auto 0;">
 						<u--text :bold="true" size="26" color="#5b5b5b" :text="'('+time+')'" />
@@ -52,9 +52,10 @@
 					</view>
 					<view>
 						<u-tabs :list="dayList" @click="tabsClick" lineWidth="140rpx" lineHeight="4rpx"
-							:activeStyle="activeStyle" :itemStyle="itemStyle" :scrollable="false" :inactiveStyle="inactiveStyle"></u-tabs>
-
-						<scroll-view scroll-y="true" style="height: 600rpx;border-top: 2rpx solid #d5d5d5;border-bottom: 2rpx solid #d5d5d5;">
+							:activeStyle="activeStyle" :itemStyle="itemStyle" :scrollable="false"
+							:inactiveStyle="inactiveStyle"></u-tabs>
+						<scroll-view scroll-y="true"
+							style="max-height: 600rpx;border-top: 2rpx solid #d5d5d5;border-bottom: 2rpx solid #d5d5d5;">
 							<u-cell-group>
 								<!-- <view v-if="current"> -->
 								<u-cell v-for="(list,indexList) in timeList" :key="indexList">
@@ -92,12 +93,10 @@
 	export default {
 		data() {
 			return {
-				store: 'MiNa（重庆）大学城熙街尚都会',
 				time: '08:00-23:00',
-				oneTokeMarginTop: 0,
 				showStore: false,
 				showTime: false,
-				inactiveStyle:{
+				inactiveStyle: {
 					fontSize: '30rpx'
 				},
 				itemStyle: {
@@ -115,20 +114,10 @@
 				allTimeList: [],
 				orderTime: '',
 				orderDay: '',
-				orderTimestamp:''
+				orderTimestamp: ''
 			}
 		},
 		methods: {
-			setOneTokeMargin() {
-				const _this = this
-				uni.getSystemInfo({
-					success(res) {
-						console.log(res.windowWidth)
-						_this.oneTokeMarginTop = parseInt((res.windowHeight - 45) * (750 / res.windowWidth))
-						console.log(_this.oneTokeMarginTop)
-					}
-				})
-			},
 			closeShowStore() {
 				this.showStore = false
 			},
@@ -149,12 +138,12 @@
 			radioClick(array) {
 				const _this = this
 				console.log(array)
-				
+
 				_this.timeList.forEach(function(list, index) {
 					list.forEach(function(item, key) {
 						item.checked = array.time === item.time ? false : true
-						if(array.time === item.time){
-							_this.orderTime = uni.$u.date(item.timestamp,'hh:MM')
+						if (array.time === item.time) {
+							_this.orderTime = uni.$u.date(item.timestamp, 'hh:MM')
 							_this.orderTimestamp = item.timestamp
 						}
 					})
@@ -173,20 +162,20 @@
 					time = new Date(timestamp)
 					time.setHours(8)
 					time.setMinutes(0)
-					while (time.getHours()<=22 && time.getMinutes()!==30) {
+					while (time.getHours() <= 22 && time.getMinutes() !== 30) {
 						var a = [];
 						for (var i = 0; i < 4; i++) {
-							if (time.getHours() == 22 && time.getMinutes()==30) break;
+							if (time.getHours() == 22 && time.getMinutes() == 30) break;
 							a.push({
 								time: uni.$u.date(time.valueOf(), 'hh:MM'),
 								checked: true,
 								timestamp: time.valueOf(),
 							})
-							
+
 							time.setMinutes(time.getMinutes() + 30)
 						}
 						this.timeList.push(a)
-						if (time.getHours() == 22 && time.getMinutes()==30) break;
+						if (time.getHours() == 22 && time.getMinutes() == 30) break;
 					}
 				} else {
 					console.log("当天预约时间")
@@ -201,10 +190,10 @@
 						time.setHours(8)
 						time.setMinutes(0)
 					}
-					while (time.getHours()<=22 ) {
+					while (time.getHours() <= 22) {
 						var a = [];
 						for (var i = 0; i < 4; i++) {
-							if (time.getHours() == 22 && time.getMinutes()==30) break;
+							if (time.getHours() == 22 && time.getMinutes() == 30) break;
 							a.push({
 								time: uni.$u.date(time.valueOf(), 'hh:MM'),
 								checked: true,
@@ -214,7 +203,7 @@
 							time.setMinutes(time.getMinutes() + 30)
 						}
 						this.timeList.push(a)
-						if (time.getHours() == 22 && time.getMinutes()==30) break;
+						if (time.getHours() == 22 && time.getMinutes() == 30) break;
 					}
 				}
 				console.log(this.timeList)
@@ -253,31 +242,27 @@
 				this.showTime = false
 			},
 			toSeat() {
-				if(this.orderTime =='')
-				{
+				if (this.orderTime == '') {
 					uni.showToast({
-						title:"请选择预约时间",
+						title: "请选择预约时间",
 						icon: 'error'
 					})
-				}
-				else{
+				} else {
 					uni.$u.route('/other_pages/seat/seat', {
 						orderTimestamp: this.orderTimestamp,
 						storeName: this.store,
 						time: this.time,
 						orderDay: this.orderDay
-					});	
+					});
 				}
-				
+
 			}
-			
+
 		},
 		computed: {
-			...mapState(['oneToke'])
+			...mapState(['oneToke', 'store'])
 		},
-		onReady() {
-			this.setOneTokeMargin()
-		},
+		onReady() {},
 		onShow() {}
 	}
 </script>
@@ -300,7 +285,9 @@
 
 	.time {
 		// margin: auto 40rpx;
-		margin-left: 20rpx;
+		margin-left: 40rpx;
+		padding: auto 140rpx;
+
 		.time-item {
 			display: inline-block;
 			margin: 20rpx auto;
