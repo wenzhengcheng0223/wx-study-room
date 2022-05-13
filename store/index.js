@@ -21,7 +21,8 @@ export default new Vuex.Store({
 			card: [{}]
 		},
 		hours: 0,
-		store: {}
+		store: {},
+		storeList: []
 	},
 	mutations: {
 		login(state, provider) {
@@ -54,6 +55,9 @@ export default new Vuex.Store({
 		},
 		setStore(state, store) {
 			state.store = store
+		},
+		setStoreList(state, storeList) {
+			state.storeList = storeList
 		}
 	},
 	getters: {
