@@ -82,6 +82,7 @@
 			click(e) {
 				console.log(e)
 				this.$store.commit('setStore', e)
+				uni.setStorageSync('store', JSON.stringify(e))
 				this.$emit('closeShow')
 			}
 		}
