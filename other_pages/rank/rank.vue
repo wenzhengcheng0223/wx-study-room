@@ -11,8 +11,7 @@
 
 					</view>
 					<view style="margin-top: 20rpx;">
-						<u--text :bold="false" size="26" color="#ffffff" align="center"
-							:text="'统计时间:'+year+'.'+month+'.01—'+year+'.'+month+'.'+day" />
+						<u--text :bold="false" size="26" color="#ffffff" align="center" text="排行榜更新延迟在24小时之内" />
 					</view>
 				</view>
 				<view class="top">
@@ -23,12 +22,12 @@
 						</view>
 						<view
 							style="border: 4rpx solid #dedfdf; width: 100rpx; height: 100rpx;border-radius: 100%;margin-left: 65rpx;">
-							<u-avatar :src="rankList[1].avatar" size="100rpx"></u-avatar>
+							<u-avatar :src="rankList[1].user.avatarUrl" size="100rpx"></u-avatar>
 						</view>
 						<view style="position: relative;">
 							<view style="width: 100%; background-color: #ffffff;">
 								<u--text :bold="false" size="26" color="#070707" align="center"
-									:text="rankList[1].name" />
+									:text="rankList[1].user.nickname" />
 							</view>
 						</view>
 						<view
@@ -36,7 +35,7 @@
 							<view
 								style="display: flex; justify-content: center; width: 136rpx;margin: auto 20rpx; height: 60rpx;">
 								<u--text :bold="true" size="36" color="#4facfe" align="right"
-									:text="rankList[1].total" />
+									:text="rankList[1].hours" />
 								<u--text :bold="false" size="26" color="#4facfe" align="" text="小时" />
 							</view>
 						</view>
@@ -48,12 +47,12 @@
 						</view>
 						<view
 							style="border: 4rpx solid #dedfdf; width: 100rpx; height: 100rpx;border-radius: 100%;margin-left: 65rpx;">
-							<u-avatar :src="rankList[0].avatar" size="100rpx"></u-avatar>
+							<u-avatar :src="rankList[0].user.avatarUrl" size="100rpx"></u-avatar>
 						</view>
 						<view style="position: relative;">
 							<view style="width: 100%; background-color: #ffffff;">
 								<u--text :bold="false" size="26" color="#070707" align="center"
-									:text="rankList[0].name" />
+									:text="rankList[0].user.nickname" />
 							</view>
 						</view>
 						<view
@@ -61,7 +60,7 @@
 							<view
 								style="display: flex; justify-content: center; width: 136rpx;margin: auto 20rpx; height: 60rpx;">
 								<u--text :bold="true" size="36" color="#4facfe" align="right"
-									:text="rankList[0].total" />
+									:text="rankList[0].hours" />
 								<u--text :bold="false" size="26" color="#4facfe" align="" text="小时" />
 							</view>
 						</view>
@@ -73,12 +72,12 @@
 						</view>
 						<view
 							style="border: 4rpx solid #dedfdf; width: 100rpx; height: 100rpx;border-radius: 100%;margin-left: 65rpx;">
-							<u-avatar :src="rankList[2].avatar" size="100rpx"></u-avatar>
+							<u-avatar :src="rankList[2].user.avatarUrl" size="100rpx"></u-avatar>
 						</view>
 						<view style="position: relative;">
 							<view style="width: 100%; background-color: #ffffff;">
 								<u--text :bold="false" size="26" color="#070707" align="center"
-									:text="rankList[2].name" />
+									:text="rankList[2].user.nickname" />
 							</view>
 						</view>
 						<view
@@ -86,7 +85,7 @@
 							<view
 								style="display: flex; justify-content: center; width: 136rpx;margin: auto 20rpx; height: 60rpx;">
 								<u--text :bold="true" size="36" color="#4facfe" align="right"
-									:text="rankList[2].total" />
+									:text="rankList[2].hours" />
 								<u--text :bold="false" size="26" color="#4facfe" align="" text="小时" />
 							</view>
 						</view>
@@ -96,31 +95,30 @@
 			</view>
 			<view>
 				<view class="container-list">
-					<view class="list-item" v-for="(item,index) in rankList.slice(3)" :key="index"
-						:style="(index % 2 ==0 )?' ':'backgroundColor: #f8f8f8'">
+					<view class="list-item" :class="{activeItem:index%2==0}" v-for="(item,index) in rankList.slice(3)"
+						:key="index">
 						<view>
 							<u-row>
 								<u-col span="2">
 									<view style="">
 										<u--text :bold="true" size="32" align="center" color="#000000" :text="index+4">
 										</u--text>
-
 									</view>
 								</u-col>
 								<u-col span="2">
 									<view style="margin-left: -10rpx;">
-										<u-avatar :src="item.avatar" size="80rpx"></u-avatar>
-
+										<u-avatar :src="item.user.avatarUrl" size="80rpx"></u-avatar>
 									</view>
 								</u-col>
 								<u-col span="5">
-									<u--text :bold="true" size="32" align="left" color="#000000" :text="item.name">
+									<u--text :bold="true" size="32" align="left" color="#000000"
+										:text="item.user.nickname">
 									</u--text>
 								</u-col>
 								<u-col span="3">
 									<view style="display: flex; justify-content: flex-start;">
 										<u--text :bold="true" size="36" color="#4facfe" align="right"
-											:text="item.total" />
+											:text="item.hours" />
 										<u--text :bold="false" size="26" color="#4facfe" align="left" text="小时" />
 									</view>
 								</u-col>
@@ -139,13 +137,12 @@
 			<view style="margin: 30rpx 80rpx;">
 				<u-row>
 					<u-col span="3">
-						<u-avatar src="/other_pages/static/rank/head.png" size="80rpx"></u-avatar>
+						<u-avatar :src="userInfo.avatarUrl" size="90rpx"></u-avatar>
 					</u-col>
 					<u-col span="9">
 						<view style="font-size: 26rpx;">
-							<p>P_Peaceful</p>
-							<p>累计学习10小时</p>
-
+							<p>{{userInfo.nickName}}</p>
+							<p>累计学习 {{hours}} 小时</p>
 						</view>
 					</u-col>
 				</u-row>
@@ -155,40 +152,72 @@
 </template>
 
 <script>
+	import {
+		mapState,
+	} from 'vuex';
+	import {
+		getRecordHousrs,
+		getRecordRank
+	} from '@/config/api.js'
 	export default {
+		computed: {
+			...mapState(['hours'])
+		},
 		data() {
 			return {
-				list: ['本店排名', '全国排名'],
+				list: ['全国排名'],
 				current: 0,
 				year: new Date().getFullYear(),
 				month: new Date().getMonth() + 1,
 				day: new Date().getDate(),
 				rankList: [],
 				viewHeight: 1400,
+				userInfo: {}
 			}
 		},
 		methods: {
 			sectionChange(index) {
 				this.current = index
+			},
+			async getHours() {
+				const {
+					data: res
+				} = await getRecordHousrs({
+					custom: {
+						auth: true
+					}
+				})
+				console.log(res)
+				this.$store.commit('setHours', res.hours)
+			},
+			async getRank() {
+				const {
+					data: res
+				} = await getRecordRank({
+					custom: {
+						auth: true
+					}
+				})
+				console.log(res)
+				this.rankList = res
 			}
 		},
 		onReady() {
-			const _this = this
+			const that = this
 			uni.getSystemInfo({
 				success(res) {
 					console.log(res)
-					_this.viewHeight = (res.windowHeight - 140) * (750 / res.windowWidth)
+					that.viewHeight = (res.windowHeight - 140) * (750 / res.windowWidth)
 				}
 			})
-			var i = 0;
-			for (i = 0; i < 50; i++) {
-				this.rankList.push({
-					name: '实验bug',
-					avatar: '/other_pages/static/rank/head.png',
-					total: 320 - i
-				})
-			}
 
+		},
+		created() {
+			const userInfo = uni.getStorageSync('userInfo')
+			this.userInfo = JSON.parse(userInfo)
+			console.log(this.userInfo)
+			this.getHours()
+			this.getRank()
 		}
 	}
 </script>
@@ -261,8 +290,14 @@
 	.list-item {
 		padding-top: 20rpx;
 		height: 100rpx;
+
 		// background-color: #398ADE;
 
+
+	}
+
+	.activeItem {
+		background-color: #f1f1f1;
 	}
 
 	.foot {
