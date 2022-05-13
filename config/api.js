@@ -45,3 +45,24 @@ export const getOrder = (params) => http.get('/api/wx/user/order', params)
  * @param {*} params 
  */
 export const getLearnRecord = (params) => http.get('/api/wx/user/order/paid', params)
+
+/**
+ * 获取用户自己的累计学习小时数
+ * @param {*} params 
+ */
+export const getRecordHousrs = (params) => http.get('/api/wx/user/record/mine', params)
+/**
+ * 获取学习记录排行榜
+ * @param {*} params 
+ */
+export const getRecordRank = (params) => http.get('/api/wx/user/record', params)
+/**
+ * 获取轮播图
+ * @param {*} params 
+ */
+export const getSwiper = (params) => http.get('/api/wx/common/swiper', params)
+/**
+ * 获取轮播图
+ * @param {*} params 
+ */
+export const getStore = (params) => http.get('/api/wx/common/store', params)

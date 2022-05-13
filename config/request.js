@@ -3,7 +3,8 @@ module.exports = (vm) => {
 	// 初始化请求配置
 	uni.$u.http.setConfig((config) => {
 		/* config 为默认全局配置*/
-		config.baseURL = 'http://localhost:8081'; /* 根域名 */
+		// config.baseURL = 'http://localhost:8081'; /* 根域名 */
+		config.baseURL = 'https://3797712290.eicp.vip'; /* 根域名 */
 		return config
 	})
 
@@ -35,7 +36,14 @@ module.exports = (vm) => {
 		if (data.code !== 200) {
 			// 如果没有显式定义custom的toast参数为false的话，默认对报错进行toast弹出提示
 			if (custom.toast !== false) {
-				uni.$u.toast(data.msg)
+
+				if (data.code == 401) {
+					uni.$u.toast("登录已过期，请重新登录")
+
+				} else {
+					uni.$u.toast(data.msg)
+
+				}
 			}
 
 			// 如果需要catch返回，则进行reject
@@ -49,7 +57,15 @@ module.exports = (vm) => {
 		return data
 	}, (response) => {
 		// 对响应错误做点什么 （statusCode !== 200）
-		uni.$u.toast(response.data.msg)
-		return Promise.reject(response)
+		const data = response.data
+		console.log(data.code)
+		if (data.code == 401) {
+			uni.$u.toast("登录已过期，请重新登录")
+
+		} else {
+			uni.$u.toast(data.msg)
+
+		}
+		return data
 	})
 }
