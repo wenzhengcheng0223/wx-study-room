@@ -5,7 +5,7 @@
 			:bgColor="bgColor" placeholder="true" @leftClick="showMenu" v-if="custom">
 			<view class="u-nav-slot my-text" slot="left">
 				<view style="width: 260rpx;">
-					<u--text :lines="1" :bold="true" size="36" :selectable="false" :text="store" />
+					<u--text :lines="1" :bold="true" size="36" :selectable="false" :text="store.roomName" />
 				</view>
 
 			</view>
@@ -25,6 +25,9 @@
 </template>
 
 <script>
+	import {
+		mapState,
+	} from 'vuex'
 	export default {
 		name: "my-navbar",
 		props: {
@@ -72,10 +75,10 @@
 			}
 		},
 		data() {
-			return {
-
-				store: 'MiNa（重庆）大学城店'
-			};
+			return {};
+		},
+		computed: {
+			...mapState(['store'])
 		},
 		methods: {
 			showMenu() {
@@ -89,6 +92,9 @@
 				console.log("navbar")
 				this.$emit('leftClick')
 			}
+		},
+		mounted() {
+			console.log("mounted")
 		}
 	}
 </script>
