@@ -77,7 +77,7 @@
 		data() {
 			return {
 				swiperList: [],
-				show: true,
+				show: false,
 				storeList: []
 			}
 		},
@@ -109,7 +109,13 @@
 					data: res
 				} = await getStore()
 				console.log(res)
-				this.$store.commit('setStore', res.rows[0])
+				const store = uni.getStorageSync('store')
+				console.log('store----', store)
+				if (store == null || store == '') {
+					this.$store.commit('setStore', res.rows[0])
+					uni.setStorageSync('store', res.rows[0])
+				}
+				this.$store.commit('setStoreList', res.rows)
 				this.storeList = res.rows
 			}
 
@@ -117,7 +123,10 @@
 		onLoad() {
 			this.setSwiper()
 			this.getStoreList()
-
+			const store = uni.getStorageSync('store')
+			if (store != null && store != '') {
+				this.$store.commit('setStore', JSON.parse(store))
+			}
 		}
 	}
 </script>

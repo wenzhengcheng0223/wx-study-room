@@ -40,7 +40,7 @@
 
 
 		<view style="max-height: 300rpx;">
-			<my-action-sheet :show="showStore" @closeShow="closeShowStore()"></my-action-sheet>
+			<my-action-sheet :list="storeList" :show="showStore" @closeShow="closeShowStore()"></my-action-sheet>
 		</view>
 
 
@@ -250,7 +250,7 @@
 				} else {
 					uni.$u.route('/other_pages/seat/seat', {
 						orderTimestamp: this.orderTimestamp,
-						storeName: this.store,
+						storeName: this.store.roomName,
 						time: this.time,
 						orderDay: this.orderDay
 					});
@@ -260,7 +260,7 @@
 
 		},
 		computed: {
-			...mapState(['oneToke', 'store'])
+			...mapState(['oneToke', 'store', 'storeList'])
 		},
 		onReady() {},
 		onShow() {}
