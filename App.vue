@@ -3,7 +3,9 @@
 	@import "uview-ui/index.scss";
 </style>
 <script>
-	   
+	import {
+		getHitokoto
+	} from 'common/request/api/hitokoto.js'
 	export default {
 		onLaunch: function() {
 			const that = this
@@ -11,22 +13,21 @@
 			uni.hideTabBar({
 				animation: false
 			})
-			// getHitokoto("k", "json",20).then(res => {
-			// 	res.forEach(function(res) {
-			// 		if (res !== null) {
-			// 			uni.setStorageSync('hitokoto',JSON.stringify(res.data))
-			// 			const data = res.data
-			// 			if(data.from_who === null || data.from_who === "佚名"){
-			// 				that.setOneToke(data.hitokoto+'—— '+data.from)
-			// 			}else{
-			// 				that.setOneToke(data.hitokoto+'—— '+data.from_who)
-			// 			}
-						
-			// 		}
-			// 	})
-			// })
-			// console.log(this.oneToke)
+			getHitokoto("k", "json", 20).then(res => {
+				res.forEach(function(res) {
+					if (res !== null) {
+						const data = res.data
+						if (data.from_who === null || data.from_who === "佚名") {
+							const oneToke = data.hitokoto + '—— ' + data.from
+							that.$store.commit('setOneToke', oneToke)
+						} else {
+							const oneToke = data.hitokoto + '—— ' + data.from_who
+							that.$store.commit('setOneToke', oneToke)
+						}
 
+					}
+				})
+			})
 		},
 		onShow: function() {
 			console.log('App Show')
