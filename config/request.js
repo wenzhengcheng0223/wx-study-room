@@ -28,7 +28,8 @@ module.exports = (vm) => {
 		/* 对响应成功做点什么 可使用async await 做异步操作*/
 
 		const data = response.data
-
+		// console.log("response--------")
+		// console.log(data)
 		// 自定义参数
 		const custom = response.config?.custom
 		if (data.code !== 200) {

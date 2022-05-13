@@ -1,13 +1,47 @@
 const http = uni.$u.http
 
+
 /**
- * 临时登陆code获取token
+ * 通过临时登录code 换取用户的openid
+ * @param {code} params 
+ * @param {*} config 
  */
 export const login = (params, config = {}) => http.post('/api/wx/login', params, config)
 
+/**
+ * 通过临时code（和登录临时code不一样）获取用户手机号
+ * @param {code} params 
+ * @param {*} config 
+ */
 export const phone = (params, config = {}) => http.post('/api/wx/phone', params, config)
 
+/**
+ * encryptedData:用户加密信息
+ * ivStr:加密算法的初始向量
+ * @param {*} encryptedData
+ * @param {*} ivStr 
+ */
 export const userInfo = (params, config = {}) => http.post('/api/wx/userInfo', params, config)
 
+/**
+ * 获取用户账户余额
+ * @param {*} params 
+ */
 export const getBalance = (params) => http.get('/api/wx/user/balance', params)
+
+/**
+ * 获取用户账户拥有的优惠卡
+ * @param {} params 
+ */
 export const getCard = (params) => http.get('/api/wx/user/card', params)
+
+/**
+ * 获取用户所有消费订单
+ * @param {*} params 
+ */
+export const getOrder = (params) => http.get('/api/wx/user/order', params)
+/**
+ * 获取用户所有已消费订单 
+ * @param {*} params 
+ */
+export const getLearnRecord = (params) => http.get('/api/wx/user/order/paid', params)
