@@ -50,7 +50,7 @@
 			</view>
 			<!-- 底部固定浮动区域 -->
 			<view class="foot">
-				<u--text :bold="true" size="28" color="#303133" text="MiNa（重庆）大学城店" align="left" />
+				<u--text :bold="true" size="28" color="#303133" :text="store.roomName" align="left" />
 				<view style="display: flex; justify-content: space-between; margin: 40rpx auto;">
 					<view style="display: flex; flex-direction: row;">
 						<view>
@@ -113,15 +113,15 @@
 			}
 		},
 		computed: {
-			...mapState(['oneToke'])
+			...mapState(['oneToke', 'store'])
 		},
 		methods: {
 			back() {
 				uni.navigateBack()
 			},
-			toPayment(){
+			toPayment() {
 				uni.$u.route('/other_pages/payment/payment', {
-					
+
 				})
 			}
 		},
