@@ -19,7 +19,9 @@ export default new Vuex.Store({
 		account: {
 			balance: 0,
 			card: [{}]
-		}
+		},
+		hours: 0,
+		store: {}
 	},
 	mutations: {
 		login(state, provider) {
@@ -46,6 +48,12 @@ export default new Vuex.Store({
 		setCard(state, payload) {
 			console.log(payload)
 			state.account.card = payload
+		},
+		setHours(state, hours) {
+			state.hours = hours
+		},
+		setStore(state, store) {
+			state.store = store
 		}
 	},
 	getters: {
