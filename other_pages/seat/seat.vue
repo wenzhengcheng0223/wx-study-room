@@ -12,12 +12,12 @@
 						<view
 							style="display:flex; flex-direction:row; margin-top: 20rpx; justify-content: space-around;">
 							<view style="width: 305rpx;">
-								<u--text lines="1" :bold="true" size="36" color="#5b5b5b" :text="storeName" />
+								<u--text lines="1" :bold="true" size="36" color="#5b5b5b" :text="store.roomName" />
 							</view>
 							<view style="margin-top: 10rpx;padding: auto 0;">
 								<u--text :bold="true" size="26" color="#5b5b5b" :text="'('+time+')'" />
 							</view>
-							<view style="margin-top: 10rpx; margin-left: 20rpx;" @click="changeShowStore()">
+							<view style="margin-top: 10rpx; margin-left: 20rpx;" @click="changeShowStore">
 								<u--text :bold="true" size="26" color="#35a5ed" text="切换门店" />
 							</view>
 						</view>
@@ -89,10 +89,18 @@
 				</u-button>
 			</view>
 		</view>
+
+
+		<view style="max-height: 300rpx;">
+			<my-action-sheet :list="storeList" :show="showStore" @closeShow="closeShowStore()"></my-action-sheet>
+		</view>
 	</view>
 </template>
 
 <script>
+	import {
+		mapState,
+	} from 'vuex'
 	export default {
 		props: {
 			// 预约时间戳
@@ -112,6 +120,9 @@
 				type: String
 			}
 		},
+		computed: {
+			...mapState(['storeList', 'store'])
+		},
 		data() {
 			return {
 				label: '',
@@ -122,6 +133,7 @@
 				orderTotal: 0,
 				endChecked: false,
 				orderHours: 0,
+				showStore: false,
 			}
 		},
 		methods: {
@@ -199,10 +211,10 @@
 				now.setMinutes(0)
 				const hours = new Date(now.getTime() - date.getTime())
 				this.hours = hours.getUTCHours()
-				console.log(hours.getTime())
+				console.log('小时时间戳', hours.getTime())
 				const minutes = hours.getMinutes() === 30 ? 0.5 : 0
 				this.total = this.hours + minutes
-				console.log(this.total)
+				console.log('最大可预约时间', this.total)
 				for (var i = 0; i < this.hours; i++) {
 					if (i > 5) break
 					this.radios.push({
@@ -211,7 +223,14 @@
 				}
 
 
-			}
+			},
+			changeShowStore() {
+				this.showStore = true
+			},
+			closeShowStore() {
+				this.showStore = false
+			},
+
 		},
 		onLoad() {
 			this.setLabel()
