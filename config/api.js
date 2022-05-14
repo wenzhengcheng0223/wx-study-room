@@ -66,3 +66,25 @@ export const getSwiper = (params) => http.get('/api/wx/common/swiper', params)
  * @param {*} params 
  */
 export const getStore = (params) => http.get('/api/wx/common/store', params)
+
+
+/**
+ * 获取当前时间段的座位详情
+ * @param {*} params 
+ * @param {*} config 
+ */
+export const getSeat = (params, config = {}) => http.post('/api/wx/common/seat', params, config)
+
+/**
+ * 获取当前时间段的座位详情
+ * @param {*} params 
+ * @param {*} config 
+ */
+export const orderSeat = (params, config = {}) => http.post('/api/wx/pay/order/seat', params, config)
+
+/**
+ * 获取当前时间段的座位详情
+ * @param {*} params 
+ * @param {*} config 
+ */
+export const orderSeatConsumed = (params, config = {}) => http.put('/api/wx/pay/order/seat/consumed', params, config)
