@@ -62,6 +62,9 @@
 </template>
 
 <script>
+	import {
+		orderSeatConsumed
+	} from '@/config/api.js'
 	export default {
 		props: {
 			show: {
@@ -85,10 +88,22 @@
 		},
 		methods: {
 			cancel(item) {
-				console.log("cancel")
+				console.log("cancel", item)
 			},
-			advance(item) {
-				console.log("advance")
+			async advance(item) {
+				console.log("advance", item)
+				const params = {
+					orderId: item.orderId,
+					hours: item.hours
+				}
+				const {
+					date: res
+				} = await orderSeatConsumed(params, {
+					custom: {
+						auth: true
+					}
+				})
+				console.log(res)
 			},
 			loadmore() {
 				if (this.status == 'loadmore') this.$emit('loadmore');
