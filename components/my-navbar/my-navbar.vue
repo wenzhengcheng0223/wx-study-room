@@ -5,7 +5,7 @@
 			:bgColor="bgColor" placeholder="true" @leftClick="showMenu" v-if="custom">
 			<view class="u-nav-slot my-text" slot="left">
 				<view style="width: 260rpx;">
-					<u--text :lines="1" :bold="true" size="36" :selectable="false" :text="store.roomName" />
+					<u--text :lines="1" :bold="true" size="36" :selectable="false" :text="storeName" />
 				</view>
 
 			</view>
@@ -72,6 +72,10 @@
 			leftIconColor: {
 				type: String,
 				default: uni.$u.props.navbar.leftIconColor
+			},
+			storeName: {
+				type: String,
+				default: '请选择门店'
 			}
 		},
 		data() {
