@@ -79,13 +79,22 @@
 
 			}
 		},
+		watch: {
+			total(val) {
+				console.log('total-------', val)
+			}
+		},
 		methods: {
 			async tabsClick(index) {
 				console.log(index)
+				uni.showLoading({
+					title: '加载中'
+				})
 				this.params.pageNum = 1
 				this.index = index.index
 				if (this.index == 2 || this.index == 3) {
 					this.show = true
+					this.total = 0
 				} else {
 					this.show = false
 				}
@@ -98,6 +107,11 @@
 							auth: true
 						}
 					})
+					await setTimeout(() => {
+						uni.showToast({
+							icon: 'success'
+						})
+					}, 1500)
 					console.log("getLearnRecord--------")
 					console.log(order)
 					this.list = order.rows
@@ -118,6 +132,11 @@
 							auth: true
 						}
 					})
+					await setTimeout(() => {
+						uni.showToast({
+							icon: 'success'
+						})
+					}, 1500)
 					console.log("getOrder------")
 					console.log(order)
 					this.list = order.rows
@@ -129,7 +148,7 @@
 						this.status = 'nomore'
 					}
 				}
-				console.log(this.index)
+
 			},
 			async loadmore() {
 				console.log("loadmore")
@@ -188,6 +207,14 @@
 				console.log(order)
 				this.list = order.rows
 				this.total = order.total
+				if (this.total == 0) {
+					await setTimeout(() => {
+						uni.showToast({
+							icon: 'success'
+						})
+						this.show = true
+					}, 1500)
+				}
 				this.size = order.rows.length
 				if (order.total > 4) {
 					this.status = 'loadmore'
@@ -242,7 +269,11 @@
 			}
 		},
 		onLoad() {
+			uni.showLoading({
+				title: '加载中'
+			})
 			this.listInit()
+
 		}
 
 	}
