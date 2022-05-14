@@ -2,7 +2,8 @@
 	<page-meta :page-style="'overflow:'+(show?'hidden':'visible')">
 		<view>
 			<view>
-				<my-navbar leftText=" " :custom="true" :autoBack="false" :show="show" @changeShow="changeShow">
+				<my-navbar leftText=" " :storeName="store.roomName" :custom="true" :autoBack="false" :show="show"
+					@changeShow="changeShow">
 				</my-navbar>
 			</view>
 			<view style="padding: 40rpx 40rpx 30rpx 40rpx;">
@@ -84,7 +85,7 @@
 			}
 		},
 		computed: {
-			...mapState(['oneToke'])
+			...mapState(['oneToke', 'store'])
 		},
 		methods: {
 			changeShow() {
@@ -114,9 +115,13 @@
 				const store = uni.getStorageSync('store')
 				console.log('store----', store)
 				if (store == null || store == '') {
-					this.$store.commit('setStore', res.rows[0])
+					const val = res.rows[0]
+					this.$store.commit('setStore', val)
+					console.log('this.store', this.store)
 					uni.setStorageSync('store', res.rows[0])
+					this.$store.dispatch('setStore', store)
 				}
+				this.$store.dispatch('setStore', store)
 				this.$store.commit('setStoreList', res.rows)
 				this.storeList = res.rows
 			},
@@ -161,14 +166,20 @@
 			this.getStoreList()
 			const store = uni.getStorageSync('store')
 			if (store != null && store != '') {
-				this.$store.commit('setStore', store)
+				console.log('store---', store)
+				this.$store.dispatch('setStore', store)
 			}
 
 		},
-		onShow() {
+		onReady() {
 			const isLogin = uni.getStorageSync('isLogin')
 			if (isLogin == true) {
 				this.getAccount()
+			}
+			const store = uni.getStorageSync('store')
+			if (store != null && store != '') {
+				console.log('store---', store)
+				this.$store.dispatch('setStore', store)
 			}
 		}
 	}
