@@ -400,6 +400,10 @@
 
 			},
 			async getAccount() {
+				let account = {
+					balance: null,
+					card: null
+				};
 				try {
 					const {
 						data: balance
@@ -410,9 +414,6 @@
 							catch: true
 						}
 					})
-					console.log("getAccount-----")
-					this.$store.dispatch("getBalance", balance.data.balance)
-					console.log(balance)
 					const {
 						data: card
 					} = await getCard({
@@ -421,13 +422,19 @@
 							catch: true
 						}
 					})
-					this.$store.dispatch("getCard", card.data)
+					console.log(balance, card)
+					this.$store.dispatch("getBalance", balance.balance)
+					uni.setStorageSync('balance', balance.balance)
+					this.$store.dispatch("getCard", card)
+					uni.setStorageSync('card', JSON.stringify(card))
 				} catch (res) {
 					if (res.code == 401) {
 						uni.clearStorageSync()
 						this.initData()
 					}
 				}
+				// console.log("getAccount-----", account)
+
 
 			},
 			initData() {

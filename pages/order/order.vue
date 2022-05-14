@@ -51,8 +51,8 @@
 						<u--text :bold="true" size="34" align="center" text="选择开始时间"></u--text>
 					</view>
 					<view>
-						<u-tabs :list="dayList" @click="tabsClick" lineWidth="140rpx" lineHeight="4rpx"
-							:activeStyle="activeStyle" :itemStyle="itemStyle" :scrollable="false"
+						<u-tabs :current="current" :list="dayList" @click="tabsClick" lineWidth="140rpx"
+							lineHeight="4rpx" :activeStyle="activeStyle" :itemStyle="itemStyle" :scrollable="false"
 							:inactiveStyle="inactiveStyle"></u-tabs>
 						<scroll-view scroll-y="true"
 							style="max-height: 600rpx;border-top: 2rpx solid #d5d5d5;border-bottom: 2rpx solid #d5d5d5;">
@@ -114,7 +114,8 @@
 				allTimeList: [],
 				orderTime: '',
 				orderDay: '',
-				orderTimestamp: ''
+				orderTimestamp: '',
+				current: 0
 			}
 		},
 		methods: {
@@ -136,36 +137,39 @@
 			},
 			// 时间标签
 			radioClick(array) {
-				const _this = this
+				const that = this
 				console.log(array)
 
-				_this.timeList.forEach(function(list, index) {
+				that.timeList.forEach(function(list, index) {
 					list.forEach(function(item, key) {
 						item.checked = array.time === item.time ? false : true
 						if (array.time === item.time) {
-							_this.orderTime = uni.$u.date(item.timestamp, 'hh:MM')
-							_this.orderTimestamp = item.timestamp
+							that.orderTime = uni.$u.date(item.timestamp, 'hh:MM')
+							that.orderTimestamp = item.timestamp
 						}
 					})
 				})
 
 			},
 			getTimeList(timestamp) {
-				console.log(timestamp)
+
+				console.log(uni.$u.date(timestamp, 'yyyy-mm-dd hh:MM:ss'))
 				console.log(this.dayList)
 				var time = new Date(Date.now()); //设置的时间
+				time.setSeconds(0)
 				var day = new Date(timestamp); //切换tabs的日期
 				this.timeList = []
 
 				if (day.getDate() != time.getDate()) {
 					console.log("非当天预约时间")
 					time = new Date(timestamp)
+					time.setSeconds(0)
 					time.setHours(8)
 					time.setMinutes(0)
 					while (time.getHours() <= 22 && time.getMinutes() !== 30) {
 						var a = [];
 						for (var i = 0; i < 4; i++) {
-							if (time.getHours() == 22 && time.getMinutes() == 30) break;
+							if (time.getHours() == 23 && time.getMinutes() == 0) break;
 							a.push({
 								time: uni.$u.date(time.valueOf(), 'hh:MM'),
 								checked: true,
@@ -193,7 +197,7 @@
 					while (time.getHours() <= 22) {
 						var a = [];
 						for (var i = 0; i < 4; i++) {
-							if (time.getHours() == 22 && time.getMinutes() == 30) break;
+							if (time.getHours() == 23 && time.getMinutes() == 0) break;
 							a.push({
 								time: uni.$u.date(time.valueOf(), 'hh:MM'),
 								checked: true,
@@ -211,7 +215,8 @@
 			},
 			// tabs 切换
 			tabsClick(item) {
-				console.log(item.timestamp)
+				this.current = item.index
+				console.log(item, item.timestamp)
 				this.getTimeList(item.timestamp)
 				this.orderDay = uni.$u.date(item.timestamp, 'mm月dd日')
 			},
@@ -219,19 +224,22 @@
 				var weekArr = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
 				var day = new Date(Date.now())
 				this.dayList = []
-				if (day.getHours() <= 22) {
+				if (day.getHours() != 22 && day.getMinutes() != 30) {
 					this.dayList.push({
+						index: 0,
 						name: uni.$u.date(day.valueOf(), 'mm月dd日') + '\n' + weekArr[day.getDay()],
 						timestamp: day.valueOf()
 					})
 				}
 				day.setHours(day.getHours() + 24)
 				this.dayList.push({
+					index: 1,
 					name: uni.$u.date(day.valueOf(), 'mm月dd日') + "\n" + weekArr[day.getDay()],
 					timestamp: day.valueOf()
 				})
 				day.setHours(day.getHours() + 24)
 				this.dayList.push({
+					index: 2,
 					name: uni.$u.date(day.valueOf(), 'mm月dd日') + "\n" + weekArr[day.getDay()],
 					timestamp: day.valueOf()
 				})
@@ -239,6 +247,7 @@
 
 			},
 			close() {
+				this.current = 0
 				this.showTime = false
 			},
 			toSeat() {

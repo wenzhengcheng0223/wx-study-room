@@ -71,7 +71,9 @@
 	} from 'vuex'
 	import {
 		getSwiper,
-		getStore
+		getStore,
+		getBalance,
+		getCard
 	} from '@/config/api.js'
 	export default {
 		data() {
@@ -117,6 +119,40 @@
 				}
 				this.$store.commit('setStoreList', res.rows)
 				this.storeList = res.rows
+			},
+			async getAccount() {
+				let account = {
+					balance: null,
+					card: null
+				};
+				try {
+					const {
+						data: balance
+					} = await
+					getBalance({
+						custom: {
+							auth: true,
+							catch: true
+						}
+					})
+					const {
+						data: card
+					} = await getCard({
+						custom: {
+							auth: true,
+							catch: true
+						}
+					})
+					console.log(balance, card)
+					this.$store.dispatch("getBalance", balance.balance)
+					uni.setStorageSync('balance', balance.balance)
+					this.$store.dispatch("getCard", card)
+					uni.setStorageSync('card', JSON.stringify(card))
+				} catch (res) {
+					if (res.code == 401) {
+						uni.clearStorageSync()
+					}
+				}
 			}
 
 		},
@@ -125,7 +161,14 @@
 			this.getStoreList()
 			const store = uni.getStorageSync('store')
 			if (store != null && store != '') {
-				this.$store.commit('setStore', JSON.parse(store))
+				this.$store.commit('setStore', store)
+			}
+
+		},
+		onShow() {
+			const isLogin = uni.getStorageSync('isLogin')
+			if (isLogin == true) {
+				this.getAccount()
 			}
 		}
 	}
