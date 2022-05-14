@@ -93,6 +93,11 @@
 				this.params.pageNum = 1
 				this.index = index.index
 				if (this.index == 2 || this.index == 3) {
+					await setTimeout(() => {
+						uni.showToast({
+							icon: 'success'
+						})
+					}, 1500)
 					this.show = true
 					this.total = 0
 				} else {
