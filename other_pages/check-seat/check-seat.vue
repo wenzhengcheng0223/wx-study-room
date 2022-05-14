@@ -9,36 +9,45 @@
 				<view style=" width: 100%;">
 					<view class="seat-head">
 						<u-icon name="/other_pages/static/seat.png" size="70"></u-icon>
-						<p style="margin:auto 20rpx;margin-right: 40rpx;">可预约:40</p>
+						<p style="margin:auto 20rpx;margin-right: 40rpx;">可预约:{{noReservedNum}}</p>
 						<u-icon name="/other_pages/static/seat-fill.png" size="70"></u-icon>
-						<p style="margin:auto 20rpx;">已预约:10</p>
+						<p style="margin:auto 20rpx;">已预约:{{reservedNum}}</p>
 					</view>
 				</view>
 				<!-- 舒适区 -->
-				<view class="vip">
-					<u--text :bold="false" size="28" color="#303133" text="V区舒适区·舒适区" align="center" />
+				<view class="vip" v-if="seatVip.length>0">
+					<u--text :bold="false" size="28" color="#303133" :text="seatVip[0].areaName+'·舒适区'"
+						align="center" />
 					<view style="margin-top: 40rpx;">
 						<view style="display: flex; flex-wrap: wrap; width: 100%;">
-							<view v-for="(index) in 10" :key="index" style="margin-left: 60rpx;margin-bottom: 40rpx;"
-								@click="show = true">
-								<u-icon name="/other_pages/static/seat.png" size="60"></u-icon>
-								<!-- <u-icon name="/other_pages/static/seat-fill.png" size="60"></u-icon> -->
-								<view style="height: 10rpx;"></view>
-								<u--text :bold="false" size="26" color="#9a9a9a" :text="index+1+'号'" align="center" />
+							<view v-for="(item,index) in seatVip" :key="index"
+								style="margin-left: 60rpx;margin-bottom: 40rpx;">
+								<view>
+									<u-icon @click="showSeat(item)" v-if="item.status==true"
+										name="/other_pages/static/seat.png" size="60"></u-icon>
+									<u-icon v-else name="/other_pages/static/seat-fill.png" size="60"></u-icon>
+									<view style="height: 10rpx;"></view>
+									<u--text :bold="false" size="26" color="#9a9a9a" :text="item.seatNum+'号'"
+										align="center" />
+								</view>
 							</view>
 						</view>
 					</view>
 				</view>
 				<!-- 经济区 -->
-				<view class="vip">
-					<u--text :bold="false" size="28" color="#303133" text="W区经济座·经济区" align="center" />
+				<view class="vip" v-if="seatCom.length>0">
+					<u--text :bold="false" size="28" color="#303133" :text="seatCom[0].areaName+'·经济区'"
+						align="center" />
 					<view style="margin-top: 40rpx;">
 						<view style="display: flex; flex-wrap: wrap; width: 100%;">
-							<view v-for="(index) in 10" :key="index" style="margin-left: 60rpx;margin-bottom: 40rpx;">
-								<u-icon name="/other_pages/static/seat.png" size="60"></u-icon>
-								<!-- <u-icon name="/other_pages/static/seat-fill.png" size="60"></u-icon> -->
+							<view v-for="(item,index) in seatCom" :key="index"
+								style="margin-left: 60rpx;margin-bottom: 40rpx;">
+								<u-icon @click="showSeat(item)" v-if="item.status==true"
+									name="/other_pages/static/seat.png" size="60"></u-icon>
+								<u-icon v-else name="/other_pages/static/seat-fill.png" size="60"></u-icon>
 								<view style="height: 10rpx;"></view>
-								<u--text :bold="false" size="26" color="#9a9a9a" :text="index+1+'号'" align="center" />
+								<u--text :bold="false" size="26" color="#9a9a9a" :text="item.seatNum+'号'"
+									align="center" />
 							</view>
 						</view>
 					</view>
@@ -73,6 +82,7 @@
 			</view>
 		</view>
 	</page-meta>
+	<!-- 座位详情弹框 -->
 	<view>
 		<u-action-sheet :show="show" @close="show = false" title="座位详情" :iconSize="36" :round="40"
 			:safeAreaInsetBottom="true">
@@ -80,7 +90,8 @@
 			<view style="display: flex; justify-content: center; align-items: center;margin-bottom: 20rpx;">
 				<u--image src="/other_pages/static/seat-detail.png" mode="aspectFit"></u--image>
 			</view>
-			<u--text :bold="false" size="28" color="#303133" text="W区经济座 14号" align="center" />
+			<u--text :bold="false" size="28" color="#303133" :text="seat.areaName+' '+seat.seatNum+'号'"
+				align="center" />
 			<view style="margin: 40rpx 20rpx;">
 				<u-button color="#35a5ed" size="large" @click="toPayment" text="确认座位"></u-button>
 			</view>
@@ -93,6 +104,9 @@
 	import {
 		mapState,
 	} from 'vuex'
+	import {
+		getSeat
+	} from '@/config/api.js'
 	export default {
 		props: {
 			startTimestamp: {
@@ -109,7 +123,12 @@
 			return {
 				date: '',
 				time: '',
-				show: false
+				show: false,
+				seatCom: [], //经济区
+				seatVip: [], //舒适区
+				reservedNum: 0, //已预约
+				noReservedNum: 0, //可预约
+				seat: {}
 			}
 		},
 		computed: {
@@ -121,13 +140,45 @@
 			},
 			toPayment() {
 				uni.$u.route('/other_pages/payment/payment', {
-
+					seat: JSON.stringify(this.seat),
+					start: uni.$u.date(this.startTimestamp, 'yyyy-mm-dd hh:MM'),
+					end: uni.$u.date(this.endTimestamp, 'yyyy-mm-dd hh:MM'),
+					total: this.orderTotal
 				})
+			},
+			showSeat(seat) {
+				this.show = true
+				this.seat = seat
+				console.log(seat)
+			},
+			async setSeat(start, end, id) {
+				const params = {
+					roomId: id,
+					startTime: start,
+					endTime: end
+				}
+				const {
+					data: res
+				} = await getSeat(params, {
+					custom: {
+						auth: true
+					}
+				})
+				console.log("所有座位详情", res)
+				this.seatCom = res.seatCom
+				this.seatVip = res.seatVip
+				this.reservedNum = res.reservedNum
+				this.noReservedNum = res.noReservedNum
 			}
 		},
 		onLoad() {
 			this.date = uni.$u.date(this.startTimestamp, 'mm月dd日')
 			this.time = uni.$u.date(this.startTimestamp, 'hh:MM')
+			const start = uni.$u.date(this.startTimestamp, 'yyyy-mm-dd hh:MM:ss')
+			const end = uni.$u.date(this.endTimestamp, 'yyyy-mm-dd hh:MM:ss')
+			console.log(start, end)
+			const store = uni.getStorageSync('store')
+			this.setSeat(start, end, store.roomId)
 		}
 	}
 </script>
