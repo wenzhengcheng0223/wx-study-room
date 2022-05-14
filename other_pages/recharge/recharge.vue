@@ -11,7 +11,7 @@
 				<view style="display: flex;">
 					<u-icon name="/other_pages/static/stamps.png" size="45"></u-icon>
 					<view style="margin-left: 10rpx;">
-						<u--text :bold="true" size="30" color="#303133" text="40点" align="left" />
+						<u--text :bold="true" size="30" color="#303133" :text="account.balance" align="left" />
 					</view>
 				</view>
 			</view>
@@ -152,7 +152,17 @@
 </template>
 
 <script>
+	import {
+		mapState
+	} from 'vuex'
+	import {
+		balanceRecharge,
+		getBalance
+	} from '@/config/api.js'
 	export default {
+		computed: {
+			...mapState(['oneToke', 'account']),
+		},
 		data() {
 			return {
 				money: 0.00,
@@ -170,10 +180,62 @@
 					icon: 'none'
 				})
 			},
-			pay() {
+			async pay() {
 				console.log(this.money)
 				console.log(this.give)
-			}
+				const that = this
+				const params = {
+					amountTotal: 0.01,
+					description: "账户余额充值: " + this.money + '-赠送:' + this.give,
+					rechargeTotal: this.money + this.give
+				}
+				const {
+					data: res
+				} = await balanceRecharge(params, {
+					custom: {
+						auth: true
+					}
+				})
+				console.log(res)
+				uni.requestPayment({
+					provider: 'wxpay',
+					timeStamp: res.timeStamp,
+					nonceStr: res.nonceStr,
+					package: res.packageValue,
+					paySign: res.paySign,
+					signType: res.signType,
+					success(res) {
+						console.log('成功支付-------', res)
+						uni.showToast({
+							icon: 'success'
+						}, 2000)
+					},
+					fail(res) {
+						console.log('支付失败-------', res)
+						uni.showToast({
+							icon: 'error',
+							title: "失败"
+						}, 2000)
+					},
+					complete(res) {
+						console.log('最终回调--------', res)
+						that.getAccount()
+					}
+				})
+			},
+			async getAccount() {
+				const {
+					data: balance
+				} = await
+				getBalance({
+					custom: {
+						auth: true
+					}
+				})
+				console.log(balance)
+				this.$store.dispatch("getBalance", balance.balance)
+				uni.setStorageSync('balance', balance.balance)
+			},
 		}
 	}
 </script>
