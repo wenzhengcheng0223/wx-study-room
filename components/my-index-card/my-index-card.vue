@@ -4,7 +4,7 @@
 			<view class="recharge">
 				<view class="my-card-bg" @click="toRecharge">
 					<view style="position: absolute; top: 20rpx; left: 20rpx;">
-						<u--text :bold="true" size="36" color="#ffffff" :selectable="false" text="充值点券" />
+						<u--text :bold="true" size="36" color="#ffffff" :selectable="false" text="余额充值" />
 						<view style="height: 10rpx;"></view>
 						<u--text :bold="false" size="24" color="#ffffff" :selectable="false" text="充值到余额" />
 					</view>
