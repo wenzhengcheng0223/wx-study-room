@@ -162,14 +162,15 @@
 				});
 				console.log("res-----", res)
 				if (res.code == 200) {
+					this.$store.commit('setIndex', 2)
 					setTimeout(() => {
 						uni.showToast({
 							icon: 'success',
 							title: '预定成功'
 						})
-						// uni.switchTab({
-						// 	url: '/pages/mine/mine'
-						// })
+						uni.switchTab({
+							url: '/pages/mine/mine'
+						})
 					}, 2000)
 
 				}
