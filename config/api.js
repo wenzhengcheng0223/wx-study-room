@@ -76,15 +76,22 @@ export const getStore = (params) => http.get('/api/wx/common/store', params)
 export const getSeat = (params, config = {}) => http.post('/api/wx/common/seat', params, config)
 
 /**
- * 获取当前时间段的座位详情
+ * 预定座位
  * @param {*} params 
  * @param {*} config 
  */
 export const orderSeat = (params, config = {}) => http.post('/api/wx/pay/order/seat', params, config)
 
 /**
- * 获取当前时间段的座位详情
+ * 消费座位
  * @param {*} params 
  * @param {*} config 
  */
 export const orderSeatConsumed = (params, config = {}) => http.put('/api/wx/pay/order/seat/consumed', params, config)
+
+/**
+ * 余额充值
+ * @param {*} params 
+ * @param {*} config 
+ */
+export const balanceRecharge = (params, config = {}) => http.post('/api/wx/pay/createOrder/recharge', params, config)
