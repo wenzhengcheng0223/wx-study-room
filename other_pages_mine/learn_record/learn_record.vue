@@ -219,13 +219,20 @@
 						})
 						this.show = true
 					}, 1500)
+				} else {
+					await setTimeout(() => {
+						uni.showToast({
+							icon: 'success'
+						})
+					}, 1500)
 				}
 				this.size = order.rows.length
-				if (order.total > 4) {
+				if (order.total > 3) {
 					this.status = 'loadmore'
 				} else {
 					this.status = 'nomore'
 				}
+
 			}
 		},
 		async onReachBottom() {
