@@ -95,3 +95,17 @@ export const orderSeatConsumed = (params, config = {}) => http.put('/api/wx/pay/
  * @param {*} config 
  */
 export const balanceRecharge = (params, config = {}) => http.post('/api/wx/pay/createOrder/recharge', params, config)
+
+/**
+ * 获取所有优惠卡列表
+ * @param {*} params 
+ * @param {*} config 
+ */
+export const cardList = (params) => http.get('/api/wx/common/card', params)
+
+/**
+ * 购买优惠卡
+ * @param {*} params 
+ * @param {*} config 
+ */
+export const payCard = (params, config = {}) => http.post('/api/wx/pay/createOrder/card', params, config)
