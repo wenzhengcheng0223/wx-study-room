@@ -11,10 +11,10 @@
 					<swiper-item v-for="(item,index) in list" :key="index">
 						<view class="swiper-item">
 							<view style="color: aliceblue;position: absolute;top: 40rpx;left: 30rpx;">
-								<p>{{item.title}}</p>
+								<p>{{item.cardTitle}}</p>
 							</view>
 							<view style="color: aliceblue;position: absolute;bottom: 40rpx;left: 30rpx;">
-								<p>￥{{item.money}}/{{item.frequency}}天</p>
+								<p>￥{{item.price}}/{{item.frequency}}天</p>
 							</view>
 							<view
 								style="color: aliceblue;position: absolute;bottom: 40rpx;right: 30rpx;font-size: 24rpx;">
@@ -35,42 +35,26 @@
 			</view>
 			<view>
 				<view class="card-comm">
-					<view style="width: 200rpx;">
-						<view style="align-items: center;justify-content: center;display: flex;margin-bottom: 10rpx;">
-							<u-icon name="/other_pages/static/package/card.png" size="100"></u-icon>
-						</view>
+					<view style="display: flex;justify-content: space-between;align-items: baseline;">
 						<view>
+							<u-icon name="/other_pages/static/package/card.png" size="100"></u-icon>
 							<u--text :bold="true" size="28" color="#35a5ed" :text="card.frequency+'天'" align="center" />
 						</view>
-						<view style="margin-top: 10rpx;">
-							<u--text :bold="false" size="22" color="#868686" :text="'购买后'+card.term+'天内有效'"
-								align="center" />
-						</view>
-					</view>
-					<view>
-						<view style="align-items: center;justify-content: center;display: flex;margin-bottom: 10rpx;">
+						<view style="display: flex;flex-direction: column;">
 							<u-icon name="/other_pages/static/package/seat.png" size="100"></u-icon>
-						</view>
-						<view>
-							<u--text :bold="true" size="28" color="#35a5ed" :text="card.areaTitle+'可用'"
-								align="center" />
-						</view>
-						<view style="margin-top: 10rpx;">
-							<u--text :bold="false" size="22" color="#868686" :text="'店内'+card.areaTitle+'可用'"
-								align="center" />
+							<my-seat-area :areaNum="card.usable"></my-seat-area>
 						</view>
 					</view>
 				</view>
-
 			</view>
 			<view class="card-text">
-				<u--text :bold="false" size="30" color="#303133" :text="card.title" align="left" />
+				<u--text :bold="false" size="30" color="#303133" :text="card.cardTitle" align="left" />
 				<view style="display: flex;justify-content: space-between;align-items: center;margin-top: 20rpx;">
 					<view style="display: flex;justify-content: flex-start; align-items: center;">
 						<u-icon name="/other_pages/static/package/card.png" size="60"></u-icon>
 						<view style="margin-left: 30rpx;margin-top: 10rpx;">
-							<u--text :bold="false" size="22" color="#868686"
-								:text="'购买后'+card.term+'天内有效,'+card.areaTitle+'可用'" align="center" />
+							<u--text :bold="false" size="22" color="#868686" :text="'购买后'+card.term+'天内有效'"
+								align="center" />
 						</view>
 					</view>
 					<view>
@@ -88,6 +72,10 @@
 </template>
 
 <script>
+	import {
+		cardList,
+		payCard
+	} from '@/config/api.js'
 	export default {
 		data() {
 			return {
@@ -105,47 +93,10 @@
 				duration: 500,
 				next: 80,
 				previous: -20,
-				list: [{
-						title: '全天体验卡',
-						money: 29.90,
-						term: 1,
-						frequency: 1,
-						area: 0,
-						areaTitle: '舒适区'
-					},
-					{
-						title: '20次体验卡—经济区',
-						money: 500.00.toFixed(2),
-						frequency: 20,
-						term: 365,
-						area: 1,
-						areaTitle: '经济区'
-					},
-					{
-						title: '活动周卡',
-						money: 179.00.toFixed(2),
-						frequency: 7,
-						term: 7,
-						area: 1,
-						areaTitle: '经济区'
-					},
-					{
-						title: '单月冲刺卡—经济区',
-						money: 599.00.toFixed(2),
-						frequency: 30,
-						term: 30,
-						area: 1,
-						areaTitle: '经济区'
-					}
-
-				],
+				list: [],
 				tabs: [{
-						name: '卡券内容'
-					},
-					{
-						name: '使用门店'
-					}
-				],
+					name: '卡券内容'
+				}],
 				activeStyle: {
 					color: '#35a5ed',
 					fontWeight: 'bold'
@@ -180,12 +131,60 @@
 			tabsClick(index) {
 				console.log(index)
 			},
-			pay() {
-				console.log("pay")
+			async pay() {
+				console.info(this.card)
+				const params = {
+					amountTotal: 0.01, //测试模式金额都为0.01
+					cardId: this.card.id,
+					description: this.card.cardTitle
+				}
+				const isLogin = uni.getStorageSync('isLogin')
+				console.log(isLogin)
+				if (isLogin == true) {
+					const {
+						data: res
+					} = await payCard(params, {
+						custom: {
+							auth: true
+						}
+					})
+					uni.showLoading({
+						title: '正在支付'
+					})
+					wx.requestPayment({
+						timeStamp: res.timeStamp,
+						nonceStr: res.nonceStr,
+						package: res.packageValue,
+						signType: res.signType,
+						paySign: res.paySign,
+						success(res) {
+							uni.showToast({
+								icon: 'success',
+							})
+						},
+						fail() {
+							uni.showToast({
+								icon: 'error'
+							})
+						}
+					})
+				} else {
+					uni.$u.toast('请先登录')
+				}
+			},
+			async getCardList() {
+				const {
+					data: res
+				} = await cardList()
+				console.log('获取优惠卡列表', res)
+				this.list = res
+				if (res.length > 0) {
+					this.card = res[0]
+				}
 			}
 		},
 		onLoad() {
-			this.card = this.list[0]
+			this.getCardList()
 			console.log(this.card)
 		}
 	}
@@ -214,8 +213,6 @@
 	}
 
 	.card-comm {
-		display: flex;
-		justify-content: space-between;
 		align-items: center;
 		border-radius: 20rpx;
 		border: 3rpx solid #35a5ed;
