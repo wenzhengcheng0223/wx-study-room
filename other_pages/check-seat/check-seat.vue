@@ -177,7 +177,8 @@
 			const start = uni.$u.date(this.startTimestamp, 'yyyy-mm-dd hh:MM:ss')
 			const end = uni.$u.date(this.endTimestamp, 'yyyy-mm-dd hh:MM:ss')
 			console.log(start, end)
-			const store = uni.getStorageSync('store')
+			const store = JSON.parse(uni.getStorageSync('store'))
+			console.log(store)
 			this.setSeat(start, end, store.roomId)
 		}
 	}
