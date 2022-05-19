@@ -21,9 +21,7 @@ export default new Vuex.Store({
 			card: [{}]
 		},
 		hours: 0,
-		store: {
-			roomName: '请选择门店'
-		},
+		store: {},
 		storeList: []
 	},
 	mutations: {
@@ -82,7 +80,7 @@ export default new Vuex.Store({
 		setStore({
 			commit
 		}, payload) {
-			console.log('store index setstore---', payload)
+			console.log('dispatch setstore---', payload)
 			commit('setStore', payload)
 		}
 	}
