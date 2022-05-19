@@ -118,10 +118,11 @@
 					const val = res.rows[0]
 					this.$store.commit('setStore', val)
 					console.log('this.store', this.store)
-					uni.setStorageSync('store', res.rows[0])
-					this.$store.dispatch('setStore', store)
+					uni.setStorageSync('store', JSON.stringify(val))
+					this.$store.dispatch('setStore', val)
+				} else {
+					this.$store.dispatch('setStore', JSON.parse(store))
 				}
-				this.$store.dispatch('setStore', store)
 				this.$store.commit('setStoreList', res.rows)
 				this.storeList = res.rows
 			},
@@ -166,20 +167,20 @@
 			this.getStoreList()
 			const store = uni.getStorageSync('store')
 			if (store != null && store != '') {
-				console.log('store---', store)
-				this.$store.dispatch('setStore', store)
+				console.log('onLoad store---', store)
+				this.$store.dispatch('setStore', JSON.parse(store))
 			}
 
 		},
-		onReady() {
+		onShow() {
 			const isLogin = uni.getStorageSync('isLogin')
 			if (isLogin == true) {
 				this.getAccount()
 			}
 			const store = uni.getStorageSync('store')
 			if (store != null && store != '') {
-				console.log('store---', store)
-				this.$store.dispatch('setStore', store)
+				console.log('onShow store---', store)
+				this.$store.dispatch('setStore', JSON.parse(store))
 			}
 		}
 	}
