@@ -5,7 +5,7 @@
 			:bgColor="bgColor" placeholder="true" @leftClick="showMenu" v-if="custom">
 			<view class="u-nav-slot my-text" slot="left">
 				<view style="width: 260rpx;">
-					<u--text :lines="1" :bold="true" size="36" :selectable="false" :text="storeName" />
+					<u--text :lines="1" :bold="true" size="36" :selectable="false" :text="store.roomName" />
 				</view>
 
 			</view>
