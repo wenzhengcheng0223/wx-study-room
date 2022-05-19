@@ -80,8 +80,14 @@
 			}
 		},
 		watch: {
-			total(val) {
-				console.log('total-------', val)
+			total: {
+				handler(val) {
+					console.log('watch handler ----', val)
+					if (val == 0) {
+						this.show = true
+					}
+				},
+				immediate: true
 			}
 		},
 		methods: {
@@ -101,7 +107,7 @@
 					this.show = true
 					this.total = 0
 				} else {
-					this.show = false
+					// this.show = false
 				}
 				if (this.index == 0) {
 					const {
@@ -117,8 +123,7 @@
 							icon: 'success'
 						})
 					}, 1500)
-					console.log("getLearnRecord--------")
-					console.log(order)
+					console.log("getLearnRecord--------", order)
 					this.list = order.rows
 					this.total = order.total
 					this.size = order.rows.length
@@ -142,8 +147,7 @@
 							icon: 'success'
 						})
 					}, 1500)
-					console.log("getOrder------")
-					console.log(order)
+					console.log("getOrder------", order)
 					this.list = order.rows
 					this.total = order.total
 					this.size = order.rows.length
