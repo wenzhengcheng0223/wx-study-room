@@ -4,7 +4,9 @@ module.exports = (vm) => {
 	uni.$u.http.setConfig((config) => {
 		/* config 为默认全局配置*/
 		// config.baseURL = 'http://localhost:8081'; /* 根域名 */
-		config.baseURL = 'https://3797712290.eicp.vip'; /* 根域名 */
+		// config.baseURL = 'https://3797712290.eicp.vip'; /* 根域名 */
+		config.baseURL = 'http://39z712290i.qicp.vip'; /* 根域名 */
+		// config.baseURL = 'http://qqz710999c1.ngrok.wendal.cn'; /* 根域名 */
 		return config
 	})
 

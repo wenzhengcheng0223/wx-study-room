@@ -85,6 +85,8 @@
 					console.log('watch handler ----', val)
 					if (val == 0) {
 						this.show = true
+					} else {
+						this.show = false
 					}
 				},
 				immediate: true
