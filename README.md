@@ -101,15 +101,15 @@
 
 #### 小程序端页面效果演示
 
-![主体模块展示](https://gitee.com/peacefulCC/images/blob/master/images/wx_study_room/%E4%B8%BB%E4%BD%93%E6%A8%A1%E5%9D%97%E5%B1%95%E7%A4%BA.png)
+![主体模块展示](https://gitee.com/peacefulCC/images/blob/master/images/wx_study_room/%E4%B8%BB%E4%BD%93%E6%A8%A1%E5%9D%97%E5%B1%95%E7%A4%BA.png)主体模块展示
 
-![首页模块展示](https://gitee.com/peacefulCC/images/raw/master/images/wx_study_room/%E9%A6%96%E9%A1%B5%E6%A8%A1%E5%9D%97.png)
+![首页模块展示](https://gitee.com/peacefulCC/images/raw/master/images/wx_study_room/%E9%A6%96%E9%A1%B5%E6%A8%A1%E5%9D%97.png)首页模块展示
 
-![预约模块展示](https://gitee.com/peacefulCC/images/raw/master/images/wx_study_room/%E9%A2%84%E7%BA%A6%E6%A8%A1%E5%9D%97.png)
+![预约模块展示](https://gitee.com/peacefulCC/images/raw/master/images/wx_study_room/%E9%A2%84%E7%BA%A6%E6%A8%A1%E5%9D%97.png)预约模块展示
 
-![个人信息模块展示](https://gitee.com/peacefulCC/images/raw/master/images/wx_study_room/%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF.png)
+![个人信息模块展示](https://gitee.com/peacefulCC/images/raw/master/images/wx_study_room/%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF.png)个人信息模块展示
 
-![登录流程展示](https://gitee.com/peacefulCC/images/raw/master/images/wx_study_room/%E7%99%BB%E5%BD%95%E6%A8%A1%E5%9D%97.png)
+![登录流程展示](https://gitee.com/peacefulCC/images/raw/master/images/wx_study_room/%E7%99%BB%E5%BD%95%E6%A8%A1%E5%9D%97.png)登录流程展示
 
 #### 参与贡献
 
