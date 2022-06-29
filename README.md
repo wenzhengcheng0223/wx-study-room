@@ -17,7 +17,6 @@
 
 ``` markdown
 |-- wx-study-room
-<<<<<<< HEAD
     ├─common						#通用请求，一言api
     │  └─request
     │      └─api
@@ -66,56 +65,6 @@
     │  └─package
     ├─store							# vue store
     └─utils
-=======
-├─common						#通用请求，一言api
-│  └─request
-│      └─api
-├─components					#通用组件
-│  ├─my-action-sheet
-│  ├─my-card-package
-│  ├─my-index-card
-│  ├─my-index-ER
-│  ├─my-learn-record
-│  ├─my-login
-│  ├─my-navbar
-│  ├─my-pay-record
-│  ├─my-pay-status
-│  ├─my-popup
-│  ├─my-seat-area
-│  └─my-tabbar
-├─config						#全局配置，以及请求封装
-├─node_modules					#uview 模块，更改了一小部分组件源码
-│  └─uview-ui
-├─other_pages					#除主体模块的其他页面
-│  ├─check-seat
-│  ├─payment
-│  ├─rank
-│  ├─recharge
-│  ├─recharge-card
-│  ├─recharge-locker
-│  ├─seat
-│  └─static
-│      ├─package
-│      └─rank
-├─other_pages_mine				#个人信息模块的其他页面
-│  ├─account
-│  ├─card_package
-│  ├─learn_record
-│  ├─locker
-│  └─static
-├─pages							#主体模块页面
-│  ├─index
-│  ├─mine
-│  ├─order
-│  └─test
-├─static						#主体模块静态文件
-│  ├─index
-│  ├─mine
-│  ├─order
-│  └─package
-├─store							# vue store
-└─utils
->>>>>>> master
 ```
 
 #### 平台模块说明
