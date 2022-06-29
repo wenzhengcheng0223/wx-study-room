@@ -101,7 +101,7 @@
 
 #### 小程序端页面效果演示
 
-![主体模块展示](https://gitee.com/peacefulCC/images/blob/master/images/wx_study_room/%E4%B8%BB%E4%BD%93%E6%A8%A1%E5%9D%97%E5%B1%95%E7%A4%BA.png)主体模块展示
+![主体模块展示](https://gitee.com/peacefulCC/images/raw/master/images/wx_study_room/%E4%B8%BB%E4%BD%93%E6%A8%A1%E5%9D%97%E5%B1%95%E7%A4%BA.png)主体模块展示
 
 ![首页模块展示](https://gitee.com/peacefulCC/images/raw/master/images/wx_study_room/%E9%A6%96%E9%A1%B5%E6%A8%A1%E5%9D%97.png)首页模块展示
 
